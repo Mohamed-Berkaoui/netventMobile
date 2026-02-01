@@ -11,6 +11,7 @@ import { Platform, StyleSheet, View, Text } from "react-native";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { CenterTab } from "@/components/center-tab";
+import { TabIcon } from "@/components/TabIcon";
 import { Colors, Spacing } from "@/constants/theme";
 import { useEventsStore } from "@/stores/eventsStore";
 
@@ -55,7 +56,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.6 }}>🏠</Text>
+            <TabIcon name="home" focused={focused} color={color} size={22} />
           ),
         }}
       />
@@ -66,7 +67,7 @@ export default function TabLayout() {
         options={{
           title: "My Agenda",
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.6 }}>📅</Text>
+            <TabIcon name="calendar" focused={focused} color={color} size={22} />
           ),
         }}
       />
@@ -78,7 +79,7 @@ export default function TabLayout() {
           title: "Discover",
           tabBarButton: (props) => <CenterTab {...props} />,
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ fontSize: 28 }}>🧭</Text>
+            <TabIcon name="compass" focused={focused} color={Colors.text.inverse} size={28} />
           ),
           tabBarLabel: ({ focused, color }) => (
             <Text style={{ color: Colors.text.inverse, fontSize: 10, fontWeight: '500' }}>Discover</Text>
@@ -93,7 +94,7 @@ export default function TabLayout() {
           title: "Notifications",
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.notificationIconContainer}>
-              <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.6 }}>🔔</Text>
+              <TabIcon name="notifications" focused={focused} color={color} size={22} />
               {/* Notification badge dot */}
               <View style={styles.notificationDot} />
             </View>
@@ -107,7 +108,7 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.6 }}>⚙️</Text>
+            <TabIcon name="settings" focused={focused} color={color} size={22} />
           ),
         }}
       />
