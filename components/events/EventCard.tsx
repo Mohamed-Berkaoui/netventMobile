@@ -3,7 +3,6 @@
  * Card displaying event summary for lists
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import React from "react";
 import {
@@ -22,6 +21,7 @@ import {
     Spacing,
 } from "../../constants/theme";
 import { Event } from "../../types";
+import { Icon } from "../TabIcon";
 import { Tag } from "../ui";
 
 interface EventCardProps {
@@ -87,7 +87,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           />
         ) : (
           <View style={styles.imagePlaceholder}>
-            <Ionicons name="calendar" size={32} color={Colors.text.tertiary} />
+            <Icon name="calendar" size={32} color={Colors.text.tertiary} />
           </View>
         )}
 
@@ -95,17 +95,13 @@ export const EventCard: React.FC<EventCardProps> = ({
         <View style={styles.badges}>
           {isCheckedIn && (
             <View style={[styles.badge, styles.checkedInBadge]}>
-              <Ionicons
-                name="checkmark-circle"
-                size={14}
-                color={Colors.text.primary}
-              />
+              <Icon name="checkmark" size={14} color={Colors.text.primary} />
               <Text style={styles.badgeText}>Checked In</Text>
             </View>
           )}
           {isRegistered && !isCheckedIn && (
             <View style={[styles.badge, styles.registeredBadge]}>
-              <Ionicons name="ticket" size={14} color={Colors.text.primary} />
+              <Icon name="calendar" size={14} color={Colors.text.primary} />
               <Text style={styles.badgeText}>Registered</Text>
             </View>
           )}
@@ -119,7 +115,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         </Text>
 
         <View style={styles.infoRow}>
-          <Ionicons
+          <Icon
             name="calendar-outline"
             size={14}
             color={Colors.text.tertiary}
@@ -134,11 +130,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         </View>
 
         <View style={styles.infoRow}>
-          <Ionicons
-            name="location-outline"
-            size={14}
-            color={Colors.text.tertiary}
-          />
+          <Icon name="compass-outline" size={14} color={Colors.text.tertiary} />
           <Text style={styles.infoText} numberOfLines={1}>
             {event.venue_name}
           </Text>

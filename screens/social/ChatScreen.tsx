@@ -3,7 +3,7 @@
  * Real-time messaging with another user
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -258,7 +258,7 @@ export const ChatScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
 
         {recipient && (
@@ -286,11 +286,7 @@ export const ChatScreen: React.FC = () => {
             })
           }
         >
-          <Ionicons
-            name="information-circle-outline"
-            size={24}
-            color={Colors.text.primary}
-          />
+          <Icon name="search" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
       </View>
 
@@ -316,8 +312,8 @@ export const ChatScreen: React.FC = () => {
             }
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
-                <Ionicons
-                  name="chatbubbles-outline"
+                <Icon
+                  name="chatbubble"
                   size={48}
                   color={Colors.text.tertiary}
                 />
@@ -349,7 +345,7 @@ export const ChatScreen: React.FC = () => {
             {sending ? (
               <ActivityIndicator size="small" color={Colors.text.primary} />
             ) : (
-              <Ionicons name="send" size={20} color={Colors.text.primary} />
+              <Icon name="send" size={20} color={Colors.text.primary} />
             )}
           </TouchableOpacity>
         </View>

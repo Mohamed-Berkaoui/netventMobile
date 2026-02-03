@@ -3,31 +3,31 @@
  * View a post with comments
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    RefreshControl,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar, LoadingSpinner } from "../../components/ui";
 import {
-    BorderRadius,
-    Colors,
-    FontSizes,
-    FontWeights,
-    Spacing,
+  BorderRadius,
+  Colors,
+  FontSizes,
+  FontWeights,
+  Spacing,
 } from "../../constants/theme";
 import { supabase } from "../../services/supabase";
 import { useAuthStore } from "../../stores/authStore";
@@ -268,7 +268,7 @@ export const PostDetailsScreen: React.FC = () => {
             style={styles.postAction}
             onPress={handleLikeToggle}
           >
-            <Ionicons
+            <Icon
               name={post.liked_by_me ? "heart" : "heart-outline"}
               size={24}
               color={
@@ -279,11 +279,7 @@ export const PostDetailsScreen: React.FC = () => {
           </TouchableOpacity>
 
           <View style={styles.postAction}>
-            <Ionicons
-              name="chatbubble-outline"
-              size={24}
-              color={Colors.text.tertiary}
-            />
+            <Icon name="chatbubble" size={24} color={Colors.text.tertiary} />
             <Text style={styles.postActionCount}>{post.comments_count}</Text>
           </View>
         </View>
@@ -308,17 +304,13 @@ export const PostDetailsScreen: React.FC = () => {
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+            <Icon name="arrow-back" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.title}>Post</Text>
           <View style={styles.placeholder} />
         </View>
         <View style={styles.errorContainer}>
-          <Ionicons
-            name="alert-circle-outline"
-            size={48}
-            color={Colors.text.tertiary}
-          />
+          <Icon name="close-circle" size={48} color={Colors.text.tertiary} />
           <Text style={styles.errorText}>Post not found</Text>
         </View>
       </SafeAreaView>
@@ -333,7 +325,7 @@ export const PostDetailsScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.title}>Post</Text>
         <View style={styles.placeholder} />
@@ -390,7 +382,7 @@ export const PostDetailsScreen: React.FC = () => {
             {submitting ? (
               <ActivityIndicator size="small" color={Colors.text.primary} />
             ) : (
-              <Ionicons name="send" size={18} color={Colors.text.primary} />
+              <Icon name="send" size={18} color={Colors.text.primary} />
             )}
           </TouchableOpacity>
         </View>

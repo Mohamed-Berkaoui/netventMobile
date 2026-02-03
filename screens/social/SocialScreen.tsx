@@ -3,7 +3,7 @@
  * Main social screen with friends, chat, and feed tabs
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -15,12 +15,7 @@ import {
     View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-    Avatar,
-    Card,
-    EmptyState,
-    LoadingSpinner
-} from "../../components/ui";
+import { Avatar, Card, EmptyState, LoadingSpinner } from "../../components/ui";
 import {
     BorderRadius,
     Colors,
@@ -143,7 +138,7 @@ export const SocialScreen: React.FC = () => {
             })
           }
         >
-          <Ionicons name="chatbubble" size={20} color={Colors.primary.accent} />
+          <Icon name="chatbubble" size={20} color={Colors.primary.accent} />
         </TouchableOpacity>
       </View>
     </Card>
@@ -169,13 +164,13 @@ export const SocialScreen: React.FC = () => {
             style={[styles.requestButton, styles.acceptButton]}
             onPress={() => handleAcceptRequest(item.id)}
           >
-            <Ionicons name="checkmark" size={20} color={Colors.text.primary} />
+            <Icon name="checkmark" size={20} color={Colors.text.primary} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.requestButton, styles.rejectButton]}
             onPress={() => handleRejectRequest(item.id)}
           >
-            <Ionicons name="close" size={20} color={Colors.text.primary} />
+            <Icon name="close" size={20} color={Colors.text.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -248,7 +243,7 @@ export const SocialScreen: React.FC = () => {
         </Text>
         <View style={styles.postActions}>
           <View style={styles.postAction}>
-            <Ionicons
+            <Icon
               name={item.liked_by_me ? "heart" : "heart-outline"}
               size={20}
               color={
@@ -258,11 +253,7 @@ export const SocialScreen: React.FC = () => {
             <Text style={styles.postActionCount}>{item.likes_count}</Text>
           </View>
           <View style={styles.postAction}>
-            <Ionicons
-              name="chatbubble-outline"
-              size={20}
-              color={Colors.text.tertiary}
-            />
+            <Icon name="chatbubble" size={20} color={Colors.text.tertiary} />
             <Text style={styles.postActionCount}>{item.comments_count}</Text>
           </View>
         </View>
@@ -381,8 +372,8 @@ export const SocialScreen: React.FC = () => {
           style={[styles.tab, activeTab === "chat" && styles.activeTab]}
           onPress={() => setActiveTab("chat")}
         >
-          <Ionicons
-            name="chatbubbles"
+          <Icon
+            name="chatbubble"
             size={20}
             color={
               activeTab === "chat"
@@ -404,7 +395,7 @@ export const SocialScreen: React.FC = () => {
           style={[styles.tab, activeTab === "friends" && styles.activeTab]}
           onPress={() => setActiveTab("friends")}
         >
-          <Ionicons
+          <Icon
             name="people"
             size={20}
             color={
@@ -432,8 +423,8 @@ export const SocialScreen: React.FC = () => {
           style={[styles.tab, activeTab === "feed" && styles.activeTab]}
           onPress={() => setActiveTab("feed")}
         >
-          <Ionicons
-            name="newspaper"
+          <Icon
+            name="bookmark"
             size={20}
             color={
               activeTab === "feed"

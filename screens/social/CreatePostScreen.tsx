@@ -3,7 +3,7 @@
  * Create a new post for the event feed
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import * as ImagePicker from "expo-image-picker";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -158,7 +158,7 @@ export const CreatePostScreen: React.FC = () => {
           style={styles.closeButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="close" size={28} color={Colors.text.primary} />
+          <Icon name="close" size={28} color={Colors.text.primary} />
         </TouchableOpacity>
 
         <Text style={styles.title}>New Post</Text>
@@ -225,7 +225,7 @@ export const CreatePostScreen: React.FC = () => {
                 style={styles.removeImageButton}
                 onPress={handleRemoveImage}
               >
-                <Ionicons
+                <Icon
                   name="close-circle"
                   size={28}
                   color={Colors.text.primary}
@@ -243,11 +243,7 @@ export const CreatePostScreen: React.FC = () => {
               onPress={handlePickImage}
               disabled={uploading}
             >
-              <Ionicons
-                name="image-outline"
-                size={24}
-                color={Colors.primary.accent}
-              />
+              <Icon name="image" size={24} color={Colors.primary.accent} />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -255,11 +251,7 @@ export const CreatePostScreen: React.FC = () => {
               onPress={handleTakePhoto}
               disabled={uploading}
             >
-              <Ionicons
-                name="camera-outline"
-                size={24}
-                color={Colors.primary.accent}
-              />
+              <Icon name="camera" size={24} color={Colors.primary.accent} />
             </TouchableOpacity>
           </View>
 

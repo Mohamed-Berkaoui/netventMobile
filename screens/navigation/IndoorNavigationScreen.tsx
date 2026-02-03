@@ -10,7 +10,6 @@
  * - Dynamic POIs from agenda items
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -31,6 +30,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "../../components/TabIcon";
 import { Card, EmptyState, LoadingSpinner } from "../../components/ui";
 import {
     BorderRadius,
@@ -385,7 +385,7 @@ export const IndoorNavigationScreen: React.FC = () => {
             onPress={() => router.back()}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+            <Icon name="arrow-back" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Venue Navigation</Text>
           <View style={styles.backButton} />
@@ -409,18 +409,18 @@ export const IndoorNavigationScreen: React.FC = () => {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Venue Navigation</Text>
         <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="search" size={24} color={Colors.text.primary} />
+          <Icon name="search" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
       </View>
 
       {/* Event Name */}
       {selectedEvent && (
         <View style={styles.eventBanner}>
-          <Ionicons name="location" size={16} color={Colors.primary.accent} />
+          <Icon name="location" size={16} color={Colors.primary.accent} />
           <Text style={styles.eventName} numberOfLines={1}>
             {selectedEvent.title}
           </Text>
@@ -530,8 +530,8 @@ export const IndoorNavigationScreen: React.FC = () => {
                     { backgroundColor: getPOIColor(poi.type) },
                   ]}
                 >
-                  <Ionicons
-                    name={getPOIIcon(poi.type) as any}
+                  <Icon
+                    name={getPOIIcon(poi.type)}
                     size={poi.type === "you" ? 16 : 12}
                     color={Colors.text.inverse}
                   />
@@ -552,10 +552,10 @@ export const IndoorNavigationScreen: React.FC = () => {
           {/* Zoom controls */}
           <View style={styles.zoomControls}>
             <TouchableOpacity style={styles.zoomButton}>
-              <Ionicons name="add" size={20} color={Colors.text.primary} />
+              <Icon name="add" size={20} color={Colors.text.primary} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.zoomButton}>
-              <Ionicons name="remove" size={20} color={Colors.text.primary} />
+              <Icon name="remove" size={20} color={Colors.text.primary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -576,8 +576,8 @@ export const IndoorNavigationScreen: React.FC = () => {
               ]}
               onPress={() => setSelectedCategory(category.id)}
             >
-              <Ionicons
-                name={category.icon as any}
+              <Icon
+                name={category.icon}
                 size={16}
                 color={
                   selectedCategory === category.id
@@ -607,8 +607,8 @@ export const IndoorNavigationScreen: React.FC = () => {
                   { backgroundColor: getPOIColor(selectedPOI.type) },
                 ]}
               >
-                <Ionicons
-                  name={getPOIIcon(selectedPOI.type) as any}
+                <Icon
+                  name={getPOIIcon(selectedPOI.type)}
                   size={24}
                   color={Colors.text.inverse}
                 />
@@ -634,21 +634,17 @@ export const IndoorNavigationScreen: React.FC = () => {
                 style={styles.closeButton}
                 onPress={() => setSelectedPOI(null)}
               >
-                <Ionicons name="close" size={20} color={Colors.text.tertiary} />
+                <Icon name="close" size={20} color={Colors.text.tertiary} />
               </TouchableOpacity>
             </View>
 
             <View style={styles.poiDetailsStats}>
               <View style={styles.poiDetailsStat}>
-                <Ionicons name="walk" size={16} color={Colors.text.tertiary} />
+                <Icon name="walk" size={16} color={Colors.text.tertiary} />
                 <Text style={styles.poiDetailsStatText}>~2 min walk</Text>
               </View>
               <View style={styles.poiDetailsStat}>
-                <Ionicons
-                  name="navigate"
-                  size={16}
-                  color={Colors.text.tertiary}
-                />
+                <Icon name="navigate" size={16} color={Colors.text.tertiary} />
                 <Text style={styles.poiDetailsStatText}>
                   Floor {selectedPOI.floor}
                 </Text>
@@ -659,7 +655,7 @@ export const IndoorNavigationScreen: React.FC = () => {
               style={styles.navigateButton}
               onPress={handleStartNavigation}
             >
-              <Ionicons name="navigate" size={20} color={Colors.text.inverse} />
+              <Icon name="navigate" size={20} color={Colors.text.inverse} />
               <Text style={styles.navigateButtonText}>Start Navigation</Text>
             </TouchableOpacity>
           </Card>
@@ -674,7 +670,7 @@ export const IndoorNavigationScreen: React.FC = () => {
                 style={styles.closeButton}
                 onPress={() => setShowDirections(false)}
               >
-                <Ionicons name="close" size={20} color={Colors.text.tertiary} />
+                <Icon name="close" size={20} color={Colors.text.tertiary} />
               </TouchableOpacity>
             </View>
 
@@ -704,7 +700,7 @@ export const IndoorNavigationScreen: React.FC = () => {
 
             <View style={styles.directionStep}>
               <View style={[styles.stepNumber, styles.stepNumberFinal]}>
-                <Ionicons name="flag" size={14} color={Colors.text.inverse} />
+                <Icon name="flag" size={14} color={Colors.text.inverse} />
               </View>
               <View style={styles.stepContent}>
                 <Text style={styles.stepText}>
@@ -744,7 +740,7 @@ export const IndoorNavigationScreen: React.FC = () => {
                       {formatTime(item.end_time)}
                     </Text>
                   </View>
-                  <Ionicons
+                  <Icon
                     name="chevron-forward"
                     size={20}
                     color={Colors.text.tertiary}

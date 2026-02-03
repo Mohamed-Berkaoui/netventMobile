@@ -3,27 +3,27 @@
  * User registration screen
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Input } from "../../components/ui";
 import {
-    BorderRadius,
-    Colors,
-    FontSizes,
-    FontWeights,
-    Spacing,
+  BorderRadius,
+  Colors,
+  FontSizes,
+  FontWeights,
+  Spacing,
 } from "../../constants/theme";
 import { useAuthStore } from "../../stores/authStore";
 
@@ -115,11 +115,7 @@ export const SignUpScreen: React.FC = () => {
               style={styles.backButton}
               onPress={navigateToSignIn}
             >
-              <Ionicons
-                name="arrow-back"
-                size={24}
-                color={Colors.text.primary}
-              />
+              <Icon name="arrow-back" size={24} color={Colors.text.primary} />
             </TouchableOpacity>
 
             {/* Header */}
@@ -133,8 +129,8 @@ export const SignUpScreen: React.FC = () => {
             {/* Error Banner */}
             {error && (
               <View style={styles.errorBanner}>
-                <Ionicons
-                  name="alert-circle"
+                <Icon
+                  name="close-circle"
                   size={20}
                   color={Colors.status.error}
                 />

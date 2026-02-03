@@ -3,14 +3,14 @@
  * Displayed when lists or content are empty
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Colors, FontSizes, FontWeights, Spacing } from "../../constants/theme";
+import { Icon, IconName } from "../TabIcon";
 import Button from "./Button";
 
 interface EmptyStateProps {
-  icon?: keyof typeof Ionicons.glyphMap;
+  icon?: IconName;
   title: string;
   description?: string;
   actionLabel?: string;
@@ -18,7 +18,7 @@ interface EmptyStateProps {
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
-  icon = "folder-open-outline",
+  icon = "home-outline",
   title,
   description,
   actionLabel,
@@ -26,12 +26,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Ionicons
-        name={icon}
-        size={64}
-        color={Colors.text.tertiary}
-        style={styles.icon}
-      />
+      <Icon name={icon} size={64} color={Colors.text.tertiary} />
       <Text style={styles.title}>{title}</Text>
       {description && <Text style={styles.description}>{description}</Text>}
       {actionLabel && onAction && (

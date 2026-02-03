@@ -4,7 +4,7 @@
  * Fetches real data from Supabase
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -29,7 +29,7 @@ import {
 import { supabase } from "../../services/supabase";
 import { useAuthStore } from "../../stores/authStore";
 import { useEventsStore } from "../../stores/eventsStore";
-import { AgendaItem, Event } from "../../types";
+import { AgendaItem } from "../../types";
 
 interface ScheduleItem {
   id: string;
@@ -37,7 +37,7 @@ interface ScheduleItem {
   title: string;
   location: string;
   speaker: string | null;
-  type: 'keynote' | 'workshop' | 'panel' | 'break' | 'session';
+  type: "keynote" | "workshop" | "panel" | "break" | "session";
 }
 
 /**
@@ -45,9 +45,9 @@ interface ScheduleItem {
  */
 const formatTime = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
     hour12: true,
   });
 };
@@ -58,13 +58,16 @@ const formatTime = (dateString: string): string => {
 const formatDateRange = (startDate: string, endDate: string): string => {
   const start = new Date(startDate);
   const end = new Date(endDate);
-  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-  const yearOptions: Intl.DateTimeFormatOptions = { year: 'numeric' };
-  
-  const startStr = start.toLocaleDateString('en-US', options);
-  const endStr = end.toLocaleDateString('en-US', options);
-  const year = start.toLocaleDateString('en-US', yearOptions);
-  
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+  };
+  const yearOptions: Intl.DateTimeFormatOptions = { year: "numeric" };
+
+  const startStr = start.toLocaleDateString("en-US", options);
+  const endStr = end.toLocaleDateString("en-US", options);
+  const year = start.toLocaleDateString("en-US", yearOptions);
+
   if (start.getMonth() === end.getMonth()) {
     return `${startStr}-${end.getDate()}, ${year}`;
   }
@@ -74,13 +77,21 @@ const formatDateRange = (startDate: string, endDate: string): string => {
 /**
  * Determine session type from title
  */
-const getSessionType = (title: string): ScheduleItem['type'] => {
+const getSessionType = (title: string): ScheduleItem["type"] => {
   const lowerTitle = title.toLowerCase();
-  if (lowerTitle.includes('keynote') || lowerTitle.includes('opening')) return 'keynote';
-  if (lowerTitle.includes('workshop') || lowerTitle.includes('hands-on')) return 'workshop';
-  if (lowerTitle.includes('panel') || lowerTitle.includes('discussion')) return 'panel';
-  if (lowerTitle.includes('break') || lowerTitle.includes('lunch') || lowerTitle.includes('networking')) return 'break';
-  return 'session';
+  if (lowerTitle.includes("keynote") || lowerTitle.includes("opening"))
+    return "keynote";
+  if (lowerTitle.includes("workshop") || lowerTitle.includes("hands-on"))
+    return "workshop";
+  if (lowerTitle.includes("panel") || lowerTitle.includes("discussion"))
+    return "panel";
+  if (
+    lowerTitle.includes("break") ||
+    lowerTitle.includes("lunch") ||
+    lowerTitle.includes("networking")
+  )
+    return "break";
+  return "session";
 };
 
 export const HomeScreen: React.FC = () => {
@@ -89,7 +100,13 @@ export const HomeScreen: React.FC = () => {
   const [loadingSchedule, setLoadingSchedule] = useState(false);
 
   const { user } = useAuthStore();
-  const { registeredEvents, pastEvents, fetchRegisteredEvents, fetchEvents, loading } = useEventsStore();
+  const {
+    registeredEvents,
+    pastEvents,
+    fetchRegisteredEvents,
+    fetchEvents,
+    loading,
+  } = useEventsStore();
 
   /**
    * Fetch today's agenda items for registered events
@@ -108,27 +125,29 @@ export const HomeScreen: React.FC = () => {
       const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
 
       const { data, error } = await supabase
-        .from('agenda_items')
-        .select('*')
-        .in('event_id', eventIds)
-        .gte('start_time', startOfDay)
-        .lte('start_time', endOfDay)
-        .order('start_time', { ascending: true });
+        .from("agenda_items")
+        .select("*")
+        .in("event_id", eventIds)
+        .gte("start_time", startOfDay)
+        .lte("start_time", endOfDay)
+        .order("start_time", { ascending: true });
 
       if (error) throw error;
 
-      const scheduleItems: ScheduleItem[] = (data || []).map((item: AgendaItem) => ({
-        id: item.id,
-        time: formatTime(item.start_time),
-        title: item.title,
-        location: `${item.location_name} • Floor ${item.floor}`,
-        speaker: null, // Speakers could be added to agenda_items table later
-        type: getSessionType(item.title),
-      }));
+      const scheduleItems: ScheduleItem[] = (data || []).map(
+        (item: AgendaItem) => ({
+          id: item.id,
+          time: formatTime(item.start_time),
+          title: item.title,
+          location: `${item.location_name} • Floor ${item.floor}`,
+          speaker: null, // Speakers could be added to agenda_items table later
+          type: getSessionType(item.title),
+        }),
+      );
 
       setTodaysSchedule(scheduleItems);
     } catch (error) {
-      console.error('Error fetching today\'s schedule:', error);
+      console.error("Error fetching today's schedule:", error);
     } finally {
       setLoadingSchedule(false);
     }
@@ -224,7 +243,7 @@ export const HomeScreen: React.FC = () => {
           <Text style={styles.headerTitle}>Home</Text>
           <View style={styles.headerRight}>
             <TouchableOpacity style={styles.notificationButton}>
-              <Ionicons
+              <Icon
                 name="notifications-outline"
                 size={24}
                 color={Colors.text.primary}
@@ -264,11 +283,7 @@ export const HomeScreen: React.FC = () => {
         <View style={styles.statsRow}>
           <Card variant="outlined" style={styles.statCard}>
             <View style={styles.statIconContainer}>
-              <Ionicons
-                name="calendar"
-                size={20}
-                color={Colors.primary.accent}
-              />
+              <Icon name="calendar" size={20} color={Colors.primary.accent} />
             </View>
             <Text style={styles.statNumber}>{totalEvents}</Text>
             <Text style={styles.statLabel}>Events Attended</Text>
@@ -280,7 +295,7 @@ export const HomeScreen: React.FC = () => {
                 { backgroundColor: Colors.status.info + "20" },
               ]}
             >
-              <Ionicons name="time" size={20} color={Colors.status.info} />
+              <Icon name="calendar" size={20} color={Colors.status.info} />
             </View>
             <Text style={styles.statNumber}>
               {daysUntilNext > 0 ? daysUntilNext : "--"}
@@ -304,13 +319,18 @@ export const HomeScreen: React.FC = () => {
             </View>
           ) : todaysSchedule.length === 0 ? (
             <Card variant="outlined" style={styles.emptyScheduleCard}>
-              <Ionicons name="calendar-outline" size={40} color={Colors.text.tertiary} />
-              <Text style={styles.emptyScheduleText}>No sessions scheduled for today</Text>
+              <Icon
+                name="calendar-outline"
+                size={40}
+                color={Colors.text.tertiary}
+              />
+              <Text style={styles.emptyScheduleText}>
+                No sessions scheduled for today
+              </Text>
               <Text style={styles.emptyScheduleSubtext}>
-                {registeredEvents.length > 0 
+                {registeredEvents.length > 0
                   ? "Check your agenda for upcoming sessions"
-                  : "Register for an event to see your schedule"
-                }
+                  : "Register for an event to see your schedule"}
               </Text>
             </Card>
           ) : (
@@ -334,7 +354,9 @@ export const HomeScreen: React.FC = () => {
                     <View
                       style={[
                         styles.scheduleTypeBadge,
-                        { backgroundColor: getEventTypeColor(item.type) + "20" },
+                        {
+                          backgroundColor: getEventTypeColor(item.type) + "20",
+                        },
                       ]}
                     >
                       <Text
@@ -348,25 +370,29 @@ export const HomeScreen: React.FC = () => {
                     </View>
                     <Text style={styles.scheduleTitle}>{item.title}</Text>
                     <View style={styles.scheduleDetails}>
-                      <Ionicons
-                        name="location-outline"
+                      <Icon
+                        name="compass-outline"
                         size={14}
                         color={Colors.text.secondary}
                       />
-                      <Text style={styles.scheduleLocation}>{item.location}</Text>
+                      <Text style={styles.scheduleLocation}>
+                        {item.location}
+                      </Text>
                     </View>
                     {item.speaker && (
                       <View style={styles.scheduleDetails}>
-                        <Ionicons
+                        <Icon
                           name="person-outline"
                           size={14}
                           color={Colors.text.secondary}
                         />
-                        <Text style={styles.scheduleSpeaker}>{item.speaker}</Text>
+                        <Text style={styles.scheduleSpeaker}>
+                          {item.speaker}
+                        </Text>
                       </View>
                     )}
                   </View>
-                  <Ionicons
+                  <Icon
                     name="chevron-forward"
                     size={20}
                     color={Colors.text.tertiary}
@@ -388,7 +414,11 @@ export const HomeScreen: React.FC = () => {
 
           {pastEvents.length === 0 ? (
             <Card variant="outlined" style={styles.emptyScheduleCard}>
-              <Ionicons name="time-outline" size={40} color={Colors.text.tertiary} />
+              <Icon
+                name="calendar-outline"
+                size={40}
+                color={Colors.text.tertiary}
+              />
               <Text style={styles.emptyScheduleText}>No past events yet</Text>
               <Text style={styles.emptyScheduleSubtext}>
                 Attend events to build your history
@@ -405,16 +435,26 @@ export const HomeScreen: React.FC = () => {
                   key={event.id}
                   style={styles.pastEventCard}
                   activeOpacity={0.8}
-                  onPress={() => router.push({ pathname: "/event/[id]", params: { id: event.id } })}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/event/[id]",
+                      params: { id: event.id },
+                    })
+                  }
                 >
                   <Image
-                    source={{ uri: event.banner_url || event.logo_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400' }}
+                    source={{
+                      uri:
+                        event.banner_url ||
+                        event.logo_url ||
+                        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400",
+                    }}
                     style={styles.pastEventImage}
                   />
                   <View style={styles.pastEventOverlay}>
                     <View style={styles.badgeEarned}>
-                      <Ionicons
-                        name="ribbon"
+                      <Icon
+                        name="calendar"
                         size={16}
                         color={Colors.status.warning}
                       />
@@ -424,15 +464,17 @@ export const HomeScreen: React.FC = () => {
                     <Text style={styles.pastEventTitle} numberOfLines={1}>
                       {event.title}
                     </Text>
-                    <Text style={styles.pastEventDate}>{formatDateRange(event.start_date, event.end_date)}</Text>
+                    <Text style={styles.pastEventDate}>
+                      {formatDateRange(event.start_date, event.end_date)}
+                    </Text>
                     <View style={styles.pastEventLocation}>
-                      <Ionicons
-                        name="location-outline"
+                      <Icon
+                        name="compass-outline"
                         size={12}
                         color={Colors.text.secondary}
                       />
                       <Text style={styles.pastEventLocationText}>
-                        {event.venue_name || 'TBA'}
+                        {event.venue_name || "TBA"}
                       </Text>
                     </View>
                   </View>
@@ -456,11 +498,7 @@ export const HomeScreen: React.FC = () => {
                   { backgroundColor: Colors.primary.accent + "20" },
                 ]}
               >
-                <Ionicons
-                  name="search"
-                  size={24}
-                  color={Colors.primary.accent}
-                />
+                <Icon name="search" size={24} color={Colors.primary.accent} />
               </View>
               <Text style={styles.quickActionLabel}>Discover</Text>
             </TouchableOpacity>
@@ -475,7 +513,7 @@ export const HomeScreen: React.FC = () => {
                   { backgroundColor: Colors.status.info + "20" },
                 ]}
               >
-                <Ionicons name="people" size={24} color={Colors.status.info} />
+                <Icon name="people" size={24} color={Colors.status.info} />
               </View>
               <Text style={styles.quickActionLabel}>Connections</Text>
             </TouchableOpacity>
@@ -490,11 +528,7 @@ export const HomeScreen: React.FC = () => {
                   { backgroundColor: Colors.status.success + "20" },
                 ]}
               >
-                <Ionicons
-                  name="id-card"
-                  size={24}
-                  color={Colors.status.success}
-                />
+                <Icon name="person" size={24} color={Colors.status.success} />
               </View>
               <Text style={styles.quickActionLabel}>My Badge</Text>
             </TouchableOpacity>
@@ -509,11 +543,7 @@ export const HomeScreen: React.FC = () => {
                   { backgroundColor: Colors.social.like + "20" },
                 ]}
               >
-                <Ionicons
-                  name="chatbubbles"
-                  size={24}
-                  color={Colors.social.like}
-                />
+                <Icon name="chatbubble" size={24} color={Colors.social.like} />
               </View>
               <Text style={styles.quickActionLabel}>Messages</Text>
             </TouchableOpacity>
@@ -648,12 +678,12 @@ const styles = StyleSheet.create({
   },
   scheduleLoading: {
     padding: Spacing.xl,
-    alignItems: 'center',
+    alignItems: "center",
   },
   emptyScheduleCard: {
     padding: Spacing.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   emptyScheduleText: {
     fontSize: FontSizes.md,
@@ -665,7 +695,7 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.sm,
     color: Colors.text.tertiary,
     marginTop: Spacing.xs,
-    textAlign: 'center',
+    textAlign: "center",
   },
   scheduleList: {
     gap: Spacing.sm,

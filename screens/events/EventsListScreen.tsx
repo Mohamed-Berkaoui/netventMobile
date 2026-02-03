@@ -4,7 +4,7 @@
  * Fetches real data from Supabase
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -257,7 +257,7 @@ export const EventsListScreen: React.FC = () => {
           <Text style={styles.headerTitle}>Discover Events</Text>
           <View style={styles.headerRight}>
             <TouchableOpacity style={styles.headerButton}>
-              <Ionicons
+              <Icon
                 name="notifications-outline"
                 size={22}
                 color={Colors.text.primary}
@@ -295,8 +295,8 @@ export const EventsListScreen: React.FC = () => {
             ]}
             onPress={() => setSelectedFilter("all")}
           >
-            <Ionicons
-              name="apps"
+            <Icon
+              name="home"
               size={16}
               color={
                 selectedFilter === "all"
@@ -321,8 +321,8 @@ export const EventsListScreen: React.FC = () => {
             ]}
             onPress={() => setSelectedFilter("location")}
           >
-            <Ionicons
-              name="location"
+            <Icon
+              name="compass"
               size={16}
               color={
                 selectedFilter === "location"
@@ -347,7 +347,7 @@ export const EventsListScreen: React.FC = () => {
             ]}
             onPress={() => setSelectedFilter("connection")}
           >
-            <Ionicons
+            <Icon
               name="people"
               size={16}
               color={
@@ -374,7 +374,7 @@ export const EventsListScreen: React.FC = () => {
             ]}
             onPress={() => setSelectedFilter("date")}
           >
-            <Ionicons
+            <Icon
               name="calendar"
               size={16}
               color={
@@ -432,7 +432,7 @@ export const EventsListScreen: React.FC = () => {
 
             {/* Events Nearby Badge */}
             <View style={styles.nearbyBadge}>
-              <Ionicons name="location" size={14} color="#14B8A6" />
+              <Icon name="compass" size={14} color="#14B8A6" />
               <Text style={styles.nearbyBadgeText}>
                 {totalNearbyEvents} Events Nearby
               </Text>
@@ -441,7 +441,7 @@ export const EventsListScreen: React.FC = () => {
             {/* View All Button */}
             <TouchableOpacity style={styles.viewAllMapButton}>
               <Text style={styles.viewAllMapText}>View All</Text>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={16}
                 color={Colors.primary.accent}
@@ -461,8 +461,8 @@ export const EventsListScreen: React.FC = () => {
                   selectedSort === "all" && styles.mapSortButtonActive,
                 ]}
               >
-                <Ionicons
-                  name="apps"
+                <Icon
+                  name="home"
                   size={18}
                   color={
                     selectedSort === "all"
@@ -491,8 +491,8 @@ export const EventsListScreen: React.FC = () => {
                   selectedSort === "location" && styles.mapSortButtonActive,
                 ]}
               >
-                <Ionicons
-                  name="location"
+                <Icon
+                  name="compass"
                   size={18}
                   color={
                     selectedSort === "location"
@@ -521,7 +521,7 @@ export const EventsListScreen: React.FC = () => {
                   selectedSort === "date" && styles.mapSortButtonActive,
                 ]}
               >
-                <Ionicons
+                <Icon
                   name="calendar"
                   size={18}
                   color={
@@ -551,7 +551,7 @@ export const EventsListScreen: React.FC = () => {
                   selectedSort === "connection" && styles.mapSortButtonActive,
                 ]}
               >
-                <Ionicons
+                <Icon
                   name="people"
                   size={18}
                   color={
@@ -609,7 +609,7 @@ export const EventsListScreen: React.FC = () => {
 
                     {/* Date */}
                     <View style={styles.eventRow}>
-                      <Ionicons
+                      <Icon
                         name="calendar-outline"
                         size={16}
                         color={Colors.text.secondary}
@@ -621,8 +621,8 @@ export const EventsListScreen: React.FC = () => {
 
                     {/* Location */}
                     <View style={styles.eventRow}>
-                      <Ionicons
-                        name="location-outline"
+                      <Icon
+                        name="compass-outline"
                         size={16}
                         color={Colors.text.secondary}
                       />
@@ -647,8 +647,8 @@ export const EventsListScreen: React.FC = () => {
                     {/* Actions */}
                     <View style={styles.eventFooter}>
                       <View style={styles.attendeesInfo}>
-                        <Ionicons
-                          name="business"
+                        <Icon
+                          name="home"
                           size={16}
                           color={Colors.text.secondary}
                         />
@@ -663,8 +663,8 @@ export const EventsListScreen: React.FC = () => {
                           style={styles.shareButton}
                           onPress={() => handleShare(event)}
                         >
-                          <Ionicons
-                            name="share-social-outline"
+                          <Icon
+                            name="share-outline"
                             size={20}
                             color={Colors.text.secondary}
                           />

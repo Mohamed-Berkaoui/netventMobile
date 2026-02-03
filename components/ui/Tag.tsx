@@ -3,7 +3,6 @@
  * For displaying interests, categories, etc.
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
     StyleSheet,
@@ -19,6 +18,7 @@ import {
     FontWeights,
     Spacing,
 } from "../../constants/theme";
+import { Icon } from "../TabIcon";
 
 interface TagProps {
   label: string;
@@ -62,7 +62,7 @@ export const Tag: React.FC<TagProps> = ({
           onPress={onRemove}
           hitSlop={{ top: 10, bottom: 10, left: 5, right: 10 }}
         >
-          <Ionicons
+          <Icon
             name="close-circle"
             size={size === "small" ? 14 : 18}
             color={selected ? Colors.text.primary : Colors.text.secondary}

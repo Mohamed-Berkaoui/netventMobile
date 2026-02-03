@@ -3,7 +3,6 @@
  * Request and manage app permissions
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -25,6 +24,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "../../components/TabIcon";
 import { Button, Card } from "../../components/ui";
 import {
     BorderRadius,
@@ -42,7 +42,7 @@ interface PermissionConfig {
   id: string;
   title: string;
   description: string;
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: string;
   required: boolean;
   enabled: boolean;
   onRequest: () => Promise<void>;
@@ -258,7 +258,7 @@ export const PermissionsScreen: React.FC = () => {
                 : styles.iconContainerDisabled,
             ]}
           >
-            <Ionicons
+            <Icon
               name={permission.icon}
               size={24}
               color={
@@ -283,7 +283,7 @@ export const PermissionsScreen: React.FC = () => {
 
           {permission.enabled ? (
             <Animated.View style={[styles.checkmark, checkAnimatedStyle]}>
-              <Ionicons
+              <Icon
                 name="checkmark-circle"
                 size={28}
                 color={Colors.status.success}
@@ -312,7 +312,7 @@ export const PermissionsScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.title}>Permissions</Text>
         <View style={styles.placeholder} />
@@ -326,7 +326,7 @@ export const PermissionsScreen: React.FC = () => {
         {/* Intro */}
         <View style={styles.intro}>
           <View style={styles.introIcon}>
-            <Ionicons
+            <Icon
               name="shield-checkmark"
               size={48}
               color={Colors.primary.accent}
@@ -359,7 +359,7 @@ export const PermissionsScreen: React.FC = () => {
 
         {/* Privacy Note */}
         <View style={styles.privacyNote}>
-          <Ionicons name="lock-closed" size={16} color={Colors.text.tertiary} />
+          <Icon name="lock-closed" size={16} color={Colors.text.tertiary} />
           <Text style={styles.privacyText}>
             We value your privacy. Location data is only used during events and
             is never sold to third parties.{" "}

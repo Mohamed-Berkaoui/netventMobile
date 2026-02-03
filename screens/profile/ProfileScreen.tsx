@@ -3,7 +3,7 @@
  * User profile display and settings
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -76,11 +76,7 @@ export const ProfileScreen: React.FC = () => {
             style={styles.settingsButton}
             onPress={handleEditProfile}
           >
-            <Ionicons
-              name="create-outline"
-              size={24}
-              color={Colors.text.primary}
-            />
+            <Icon name="settings" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
         </View>
 
@@ -106,11 +102,7 @@ export const ProfileScreen: React.FC = () => {
 
           {/* Email */}
           <View style={styles.emailContainer}>
-            <Ionicons
-              name="mail-outline"
-              size={18}
-              color={Colors.text.tertiary}
-            />
+            <Icon name="mail-outline" size={18} color={Colors.text.tertiary} />
             <Text style={styles.email}>{user?.email}</Text>
           </View>
 
@@ -156,15 +148,11 @@ export const ProfileScreen: React.FC = () => {
                     { backgroundColor: Colors.status.info },
                   ]}
                 >
-                  <Ionicons
-                    name="location"
-                    size={20}
-                    color={Colors.text.primary}
-                  />
+                  <Icon name="compass" size={20} color={Colors.text.primary} />
                 </View>
                 <Text style={styles.menuItemText}>Permissions</Text>
               </View>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={20}
                 color={Colors.text.tertiary}
@@ -181,7 +169,7 @@ export const ProfileScreen: React.FC = () => {
                     { backgroundColor: Colors.primary.accent },
                   ]}
                 >
-                  <Ionicons
+                  <Icon
                     name="notifications"
                     size={20}
                     color={Colors.text.primary}
@@ -189,7 +177,7 @@ export const ProfileScreen: React.FC = () => {
                 </View>
                 <Text style={styles.menuItemText}>Notifications</Text>
               </View>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={20}
                 color={Colors.text.tertiary}
@@ -206,15 +194,15 @@ export const ProfileScreen: React.FC = () => {
                     { backgroundColor: Colors.status.success },
                   ]}
                 >
-                  <Ionicons
-                    name="shield-checkmark"
+                  <Icon
+                    name="lock-closed"
                     size={20}
                     color={Colors.text.primary}
                   />
                 </View>
                 <Text style={styles.menuItemText}>Privacy</Text>
               </View>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={20}
                 color={Colors.text.tertiary}
@@ -236,15 +224,11 @@ export const ProfileScreen: React.FC = () => {
                     { backgroundColor: Colors.text.tertiary },
                   ]}
                 >
-                  <Ionicons
-                    name="help-circle"
-                    size={20}
-                    color={Colors.text.primary}
-                  />
+                  <Icon name="search" size={20} color={Colors.text.primary} />
                 </View>
                 <Text style={styles.menuItemText}>Help Center</Text>
               </View>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={20}
                 color={Colors.text.tertiary}
@@ -261,15 +245,11 @@ export const ProfileScreen: React.FC = () => {
                     { backgroundColor: Colors.text.tertiary },
                   ]}
                 >
-                  <Ionicons
-                    name="document-text"
-                    size={20}
-                    color={Colors.text.primary}
-                  />
+                  <Icon name="bookmark" size={20} color={Colors.text.primary} />
                 </View>
                 <Text style={styles.menuItemText}>Terms of Service</Text>
               </View>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={20}
                 color={Colors.text.tertiary}

@@ -3,7 +3,6 @@
  * Interests, goals, and role selection
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -14,6 +13,7 @@ import {
     View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "../../components/TabIcon";
 import { Avatar, Button } from "../../components/ui";
 import {
     BorderRadius,
@@ -169,8 +169,10 @@ export const ProfileSetupScreen: React.FC = () => {
             onPress={() => setShowGoalDropdown(!showGoalDropdown)}
           >
             <Text style={styles.dropdownText}>{selectedGoal}</Text>
-            <Ionicons
-              name={showGoalDropdown ? "chevron-up" : "chevron-down"}
+            <Icon
+              name={
+                showGoalDropdown ? "chevron-up-outline" : "chevron-down-outline"
+              }
               size={20}
               color={Colors.text.secondary}
             />
@@ -199,7 +201,7 @@ export const ProfileSetupScreen: React.FC = () => {
                     {goal}
                   </Text>
                   {selectedGoal === goal && (
-                    <Ionicons
+                    <Icon
                       name="checkmark"
                       size={20}
                       color={Colors.primary.accent}

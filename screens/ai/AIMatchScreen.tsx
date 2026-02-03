@@ -3,7 +3,7 @@
  * Display AI-generated matches based on interests and profile
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -148,7 +148,7 @@ export const AIMatchScreen: React.FC = () => {
         >
           {isTopMatch && (
             <View style={styles.topMatchBadge}>
-              <Ionicons name="star" size={14} color={Colors.text.primary} />
+              <Icon name="sparkles" size={14} color={Colors.text.primary} />
               <Text style={styles.topMatchText}>Top Match</Text>
             </View>
           )}
@@ -202,8 +202,8 @@ export const AIMatchScreen: React.FC = () => {
               <View style={styles.reasonsList}>
                 {item.reasons.slice(0, 3).map((reason: string, idx: number) => (
                   <View key={idx} style={styles.reasonItem}>
-                    <Ionicons
-                      name="checkmark-circle"
+                    <Icon
+                      name="checkmark"
                       size={16}
                       color={Colors.status.success}
                     />
@@ -238,11 +238,7 @@ export const AIMatchScreen: React.FC = () => {
               size="small"
               loading={sendingRequest === item.matched_user_id}
               icon={
-                <Ionicons
-                  name="person-add"
-                  size={16}
-                  color={Colors.text.primary}
-                />
+                <Icon name="person-add" size={16} color={Colors.text.primary} />
               }
               style={styles.actionButton}
             />
@@ -252,11 +248,7 @@ export const AIMatchScreen: React.FC = () => {
               variant="secondary"
               size="small"
               icon={
-                <Ionicons
-                  name="chatbubble"
-                  size={16}
-                  color={Colors.text.primary}
-                />
+                <Icon name="chatbubble" size={16} color={Colors.text.primary} />
               }
               style={styles.actionButton}
             />
@@ -287,7 +279,7 @@ export const AIMatchScreen: React.FC = () => {
       <View style={styles.headerContent}>
         <View style={styles.aiHeader}>
           <View style={styles.aiIconContainer}>
-            <Ionicons name="sparkles" size={32} color={Colors.primary.accent} />
+            <Icon name="sparkles" size={32} color={Colors.primary.accent} />
           </View>
           <View style={styles.aiHeaderText}>
             <Text style={styles.aiTitle}>AI-Powered Matches</Text>
@@ -326,11 +318,11 @@ export const AIMatchScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.title}>Networking</Text>
         <TouchableOpacity style={styles.refreshButton} onPress={onRefresh}>
-          <Ionicons name="refresh" size={24} color={Colors.text.primary} />
+          <Icon name="search" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
       </View>
 

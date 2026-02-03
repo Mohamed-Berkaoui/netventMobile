@@ -2,18 +2,13 @@
  * User Profile Route
  */
 
+import { Icon } from "@/components/TabIcon";
 import { Avatar, Button, Card, LoadingSpinner, Tag } from "@/components/ui";
-import {
-    Colors,
-    FontSizes,
-    FontWeights,
-    Spacing
-} from "@/constants/theme";
+import { Colors, FontSizes, FontWeights, Spacing } from "@/constants/theme";
 import { supabase } from "@/services/supabase";
 import { useAuthStore } from "@/stores/authStore";
 import { useSocialStore } from "@/stores/socialStore";
 import { User } from "@/types";
-import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -137,7 +132,7 @@ export default function UserProfileScreen() {
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+            <Icon name="arrow-back" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.title}>Profile</Text>
           <View style={styles.placeholder} />

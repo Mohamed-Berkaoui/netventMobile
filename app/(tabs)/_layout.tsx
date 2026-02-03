@@ -7,10 +7,10 @@
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
-import { HapticTab } from "@/components/haptic-tab";
 import { CenterTab } from "@/components/center-tab";
+import { HapticTab } from "@/components/haptic-tab";
 import { TabIcon } from "@/components/TabIcon";
 import { Colors, Spacing } from "@/constants/theme";
 import { useEventsStore } from "@/stores/eventsStore";
@@ -67,7 +67,12 @@ export default function TabLayout() {
         options={{
           title: "My Agenda",
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="calendar" focused={focused} color={color} size={22} />
+            <TabIcon
+              name="calendar"
+              focused={focused}
+              color={color}
+              size={22}
+            />
           ),
         }}
       />
@@ -79,10 +84,23 @@ export default function TabLayout() {
           title: "Discover",
           tabBarButton: (props) => <CenterTab {...props} />,
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="compass" focused={focused} color={Colors.text.inverse} size={28} />
+            <TabIcon
+              name="compass"
+              focused={focused}
+              color={Colors.text.inverse}
+              size={28}
+            />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <Text style={{ color: Colors.text.inverse, fontSize: 10, fontWeight: '500' }}>Discover</Text>
+            <Text
+              style={{
+                color: Colors.text.inverse,
+                fontSize: 10,
+                fontWeight: "500",
+              }}
+            >
+              Discover
+            </Text>
           ),
         }}
       />
@@ -94,7 +112,12 @@ export default function TabLayout() {
           title: "Notifications",
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.notificationIconContainer}>
-              <TabIcon name="notifications" focused={focused} color={color} size={22} />
+              <TabIcon
+                name="notifications"
+                focused={focused}
+                color={color}
+                size={22}
+              />
               {/* Notification badge dot */}
               <View style={styles.notificationDot} />
             </View>
@@ -108,7 +131,12 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="settings" focused={focused} color={color} size={22} />
+            <TabIcon
+              name="settings"
+              focused={focused}
+              color={color}
+              size={22}
+            />
           ),
         }}
       />

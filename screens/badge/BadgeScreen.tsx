@@ -9,7 +9,7 @@
  * - Check-in status
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { LinearGradient } from "expo-linear-gradient";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -31,8 +31,7 @@ import {
     Colors,
     FontSizes,
     FontWeights,
-    Shadows,
-    Spacing,
+    Spacing
 } from "../../constants/theme";
 import { useAuthStore } from "../../stores/authStore";
 import { useEventsStore } from "../../stores/eventsStore";
@@ -63,9 +62,10 @@ export const BadgeScreen: React.FC = () => {
     fetchCheckIns,
     checkIn,
   } = useEventsStore();
-  
+
   // Permission status for location and bluetooth
-  const { locationEnabled, bluetoothEnabled, checkPermissions } = usePermissionsStore();
+  const { locationEnabled, bluetoothEnabled, checkPermissions } =
+    usePermissionsStore();
 
   const [refreshing, setRefreshing] = useState(false);
   const [checkingIn, setCheckingIn] = useState(false);
@@ -269,7 +269,7 @@ export const BadgeScreen: React.FC = () => {
             onPress={() => router.back()}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+            <Icon name="arrow-back" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>My Badge</Text>
           <View style={styles.moreButton} />
@@ -293,15 +293,11 @@ export const BadgeScreen: React.FC = () => {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Badge</Text>
         <TouchableOpacity style={styles.moreButton}>
-          <Ionicons
-            name="ellipsis-horizontal"
-            size={24}
-            color={Colors.text.primary}
-          />
+          <Icon name="close" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
       </View>
 
@@ -319,45 +315,73 @@ export const BadgeScreen: React.FC = () => {
       >
         {/* Permission Status Indicators */}
         <View style={styles.permissionStatusBar}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.permissionItem}
-            onPress={() => router.push('/permissions')}
+            onPress={() => router.push("/permissions")}
           >
-            <View style={[
-              styles.permissionDot,
-              { backgroundColor: locationEnabled ? Colors.status.success : Colors.status.error }
-            ]} />
-            <Ionicons 
-              name="location" 
-              size={16} 
-              color={locationEnabled ? Colors.status.success : Colors.status.error} 
+            <View
+              style={[
+                styles.permissionDot,
+                {
+                  backgroundColor: locationEnabled
+                    ? Colors.status.success
+                    : Colors.status.error,
+                },
+              ]}
             />
-            <Text style={[
-              styles.permissionText,
-              { color: locationEnabled ? Colors.status.success : Colors.status.error }
-            ]}>
-              Location {locationEnabled ? 'On' : 'Off'}
+            <Icon
+              name="compass"
+              size={16}
+              color={
+                locationEnabled ? Colors.status.success : Colors.status.error
+              }
+            />
+            <Text
+              style={[
+                styles.permissionText,
+                {
+                  color: locationEnabled
+                    ? Colors.status.success
+                    : Colors.status.error,
+                },
+              ]}
+            >
+              Location {locationEnabled ? "On" : "Off"}
             </Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={styles.permissionItem}
-            onPress={() => router.push('/permissions')}
+            onPress={() => router.push("/permissions")}
           >
-            <View style={[
-              styles.permissionDot,
-              { backgroundColor: bluetoothEnabled ? Colors.status.success : Colors.status.error }
-            ]} />
-            <Ionicons 
-              name="bluetooth" 
-              size={16} 
-              color={bluetoothEnabled ? Colors.status.success : Colors.status.error} 
+            <View
+              style={[
+                styles.permissionDot,
+                {
+                  backgroundColor: bluetoothEnabled
+                    ? Colors.status.success
+                    : Colors.status.error,
+                },
+              ]}
             />
-            <Text style={[
-              styles.permissionText,
-              { color: bluetoothEnabled ? Colors.status.success : Colors.status.error }
-            ]}>
-              Bluetooth {bluetoothEnabled ? 'On' : 'Off'}
+            <Icon
+              name="flash"
+              size={16}
+              color={
+                bluetoothEnabled ? Colors.status.success : Colors.status.error
+              }
+            />
+            <Text
+              style={[
+                styles.permissionText,
+                {
+                  color: bluetoothEnabled
+                    ? Colors.status.success
+                    : Colors.status.error,
+                },
+              ]}
+            >
+              Bluetooth {bluetoothEnabled ? "On" : "Off"}
             </Text>
           </TouchableOpacity>
         </View>
@@ -415,7 +439,9 @@ export const BadgeScreen: React.FC = () => {
                 selectedEvent.end_date,
               )}
             </Text>
-            <Text style={styles.eventLocation}>{selectedEvent.venue_name || selectedEvent.venue_address}</Text>
+            <Text style={styles.eventLocation}>
+              {selectedEvent.venue_name || selectedEvent.venue_address}
+            </Text>
           </View>
 
           {/* User Profile Section */}
@@ -426,9 +452,11 @@ export const BadgeScreen: React.FC = () => {
               size="xlarge"
               showBorder
             />
-            
+
             <View style={styles.userInfoMain}>
-              <Text style={styles.userNameLarge}>{user?.name || "Attendee"}</Text>
+              <Text style={styles.userNameLarge}>
+                {user?.name || "Attendee"}
+              </Text>
               {user?.position && (
                 <Text style={styles.userPosition}>{user.position}</Text>
               )}
@@ -437,7 +465,11 @@ export const BadgeScreen: React.FC = () => {
               )}
               {user?.email && (
                 <View style={styles.userEmailRow}>
-                  <Ionicons name="mail-outline" size={14} color="rgba(255,255,255,0.7)" />
+                  <Icon
+                    name="mail-outline"
+                    size={14}
+                    color="rgba(255,255,255,0.7)"
+                  />
                   <Text style={styles.userEmail}>{user.email}</Text>
                 </View>
               )}
@@ -460,7 +492,7 @@ export const BadgeScreen: React.FC = () => {
 
           {/* Ticket Type Badge */}
           <View style={styles.ticketBadge}>
-            <Ionicons name="ticket" size={14} color={Colors.status.warning} />
+            <Icon name="calendar" size={14} color={Colors.status.warning} />
             <Text style={styles.ticketType}>
               {selectedRegistration.ticket_type || "General Admission"}
             </Text>
@@ -476,11 +508,7 @@ export const BadgeScreen: React.FC = () => {
                 { backgroundColor: getStatusColor() },
               ]}
             >
-              <Ionicons
-                name={getStatusIcon()}
-                size={20}
-                color={Colors.text.inverse}
-              />
+              <Icon name="checkmark" size={20} color={Colors.text.inverse} />
             </View>
             <View style={styles.statusInfo}>
               <Text style={styles.statusLabel}>Status</Text>
@@ -507,8 +535,8 @@ export const BadgeScreen: React.FC = () => {
                   <LoadingSpinner />
                 ) : (
                   <>
-                    <Ionicons
-                      name="enter-outline"
+                    <Icon
+                      name="arrow-back"
                       size={20}
                       color={Colors.text.inverse}
                     />
@@ -528,11 +556,7 @@ export const BadgeScreen: React.FC = () => {
                   <LoadingSpinner />
                 ) : (
                   <>
-                    <Ionicons
-                      name="exit-outline"
-                      size={20}
-                      color={Colors.text.inverse}
-                    />
+                    <Icon name="close" size={20} color={Colors.text.inverse} />
                     <Text style={styles.checkOutButtonText}>Check Out</Text>
                   </>
                 )}
@@ -541,11 +565,7 @@ export const BadgeScreen: React.FC = () => {
 
             {status === "checked-out" && (
               <View style={styles.checkedOutMessage}>
-                <Ionicons
-                  name="checkmark-done"
-                  size={20}
-                  color={Colors.text.tertiary}
-                />
+                <Icon name="checkmark" size={20} color={Colors.text.tertiary} />
                 <Text style={styles.checkedOutText}>
                   Thank you for attending!
                 </Text>
@@ -561,11 +581,7 @@ export const BadgeScreen: React.FC = () => {
             onPress={handleAddToWallet}
           >
             <View style={styles.walletIcon}>
-              <Ionicons
-                name={Platform.OS === "ios" ? "wallet" : "card"}
-                size={24}
-                color={Colors.text.primary}
-              />
+              <Icon name="bookmark" size={24} color={Colors.text.primary} />
             </View>
             <View style={styles.walletInfo}>
               <Text style={styles.walletTitle}>
@@ -575,7 +591,7 @@ export const BadgeScreen: React.FC = () => {
                 Quick access to your badge
               </Text>
             </View>
-            <Ionicons
+            <Icon
               name="chevron-forward"
               size={20}
               color={Colors.text.tertiary}
@@ -608,20 +624,18 @@ export const BadgeScreen: React.FC = () => {
 
           <View style={[styles.detailRow, styles.detailRowLast]}>
             <Text style={styles.detailLabel}>Location</Text>
-            <Text style={styles.detailValue}>{selectedEvent.venue_name || selectedEvent.venue_address}</Text>
+            <Text style={styles.detailValue}>
+              {selectedEvent.venue_name || selectedEvent.venue_address}
+            </Text>
           </View>
         </Card>
 
         {/* Help Section */}
         <Card variant="default" style={styles.helpCard}>
           <TouchableOpacity style={styles.helpButton}>
-            <Ionicons
-              name="help-circle-outline"
-              size={24}
-              color={Colors.primary.accent}
-            />
+            <Icon name="search" size={24} color={Colors.primary.accent} />
             <Text style={styles.helpText}>Need help with check-in?</Text>
-            <Ionicons
+            <Icon
               name="chevron-forward"
               size={20}
               color={Colors.text.tertiary}
@@ -643,9 +657,9 @@ const styles = StyleSheet.create({
 
   // Permission Status Bar
   permissionStatusBar: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     gap: Spacing.lg,
     paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.md,
@@ -655,8 +669,8 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
   },
   permissionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: Spacing.xs,
   },
   permissionDot: {
@@ -671,38 +685,38 @@ const styles = StyleSheet.create({
 
   // User Profile Section
   userProfileSection: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: Spacing.lg,
   },
   userInfoMain: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: Spacing.md,
   },
   userNameLarge: {
     fontSize: FontSizes.xxl,
     fontWeight: FontWeights.bold,
     color: Colors.text.inverse,
-    textAlign: 'center',
+    textAlign: "center",
   },
   userPosition: {
     fontSize: FontSizes.md,
-    color: 'rgba(255,255,255,0.9)',
+    color: "rgba(255,255,255,0.9)",
     marginTop: Spacing.xs,
   },
   userCompany: {
     fontSize: FontSizes.md,
-    color: 'rgba(255,255,255,0.8)',
+    color: "rgba(255,255,255,0.8)",
     marginTop: Spacing.xs,
   },
   userEmailRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: Spacing.xs,
     marginTop: Spacing.sm,
   },
   userEmail: {
     fontSize: FontSizes.sm,
-    color: 'rgba(255,255,255,0.7)',
+    color: "rgba(255,255,255,0.7)",
   },
 
   // Interests Section
@@ -712,18 +726,18 @@ const styles = StyleSheet.create({
   },
   interestsLabel: {
     fontSize: FontSizes.xs,
-    color: 'rgba(255,255,255,0.6)',
+    color: "rgba(255,255,255,0.6)",
     marginBottom: Spacing.xs,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
     letterSpacing: 1,
   },
   interestsTags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: Spacing.xs,
   },
   interestTag: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: "rgba(255,255,255,0.2)",
     paddingHorizontal: Spacing.sm,
     paddingVertical: Spacing.xs,
     borderRadius: BorderRadius.full,

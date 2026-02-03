@@ -3,7 +3,7 @@
  * Update user profile information
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -142,7 +142,7 @@ export const EditProfileScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.title}>Edit Profile</Text>
         <View style={styles.placeholder} />
@@ -164,7 +164,7 @@ export const EditProfileScreen: React.FC = () => {
               showBorder
             />
             <View style={styles.avatarBadge}>
-              <Ionicons name="camera" size={18} color={Colors.text.primary} />
+              <Icon name="camera" size={18} color={Colors.text.primary} />
             </View>
           </TouchableOpacity>
           <Text style={styles.avatarHint}>Tap to change photo</Text>

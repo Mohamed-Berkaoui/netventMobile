@@ -10,7 +10,6 @@
  * - Start Navigation button
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -24,6 +23,7 @@ import {
     View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "../../components/TabIcon";
 import { Card, EmptyState, LoadingSpinner } from "../../components/ui";
 import {
     BorderRadius,
@@ -130,7 +130,7 @@ const AgendaItemCard: React.FC<AgendaItemCardProps> = ({
             )}
 
             <View style={styles.locationRow}>
-              <Ionicons
+              <Icon
                 name="location-outline"
                 size={14}
                 color={Colors.text.secondary}
@@ -346,11 +346,7 @@ export const AgendaScreen: React.FC = () => {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>My Agenda</Text>
           <TouchableOpacity style={styles.filterButton}>
-            <Ionicons
-              name="filter-outline"
-              size={22}
-              color={Colors.text.primary}
-            />
+            <Icon name="filter-outline" size={22} color={Colors.text.primary} />
           </TouchableOpacity>
         </View>
 
@@ -362,7 +358,7 @@ export const AgendaScreen: React.FC = () => {
               onPress={() => changeMonth(-1)}
               style={styles.monthNavButton}
             >
-              <Ionicons
+              <Icon
                 name="chevron-back"
                 size={24}
                 color={Colors.text.secondary}
@@ -375,7 +371,7 @@ export const AgendaScreen: React.FC = () => {
               onPress={() => changeMonth(1)}
               style={styles.monthNavButton}
             >
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={24}
                 color={Colors.text.secondary}
@@ -482,7 +478,7 @@ export const AgendaScreen: React.FC = () => {
                 style={styles.miniMapGradient}
               >
                 <View style={styles.miniMapContent}>
-                  <Ionicons
+                  <Icon
                     name="map-outline"
                     size={40}
                     color={Colors.text.tertiary}
@@ -516,7 +512,7 @@ export const AgendaScreen: React.FC = () => {
               style={styles.navigationButton}
               onPress={handleStartNavigation}
             >
-              <Ionicons name="navigate" size={20} color={Colors.text.inverse} />
+              <Icon name="navigate" size={20} color={Colors.text.inverse} />
               <Text style={styles.navigationButtonText}>Start Navigation</Text>
             </TouchableOpacity>
           </Card>

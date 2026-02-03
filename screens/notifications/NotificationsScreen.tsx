@@ -9,32 +9,31 @@
  * - Event reminders
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    FlatList,
+    RefreshControl,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar, Card, EmptyState } from "../../components/ui";
 import {
-  BorderRadius,
-  Colors,
-  FontSizes,
-  FontWeights,
-  Spacing,
+    BorderRadius,
+    Colors,
+    FontSizes,
+    FontWeights,
+    Spacing,
 } from "../../constants/theme";
 import { supabase } from "../../services/supabase";
 import { useAuthStore } from "../../stores/authStore";
 import { useEventsStore } from "../../stores/eventsStore";
 import { useSocialStore } from "../../stores/socialStore";
-import { Event, User } from "../../types";
 
 // Notification types
 type NotificationType =
@@ -102,17 +101,22 @@ export const NotificationsScreen: React.FC = () => {
     // 2. Get friends' registrations for events
     try {
       const friendIds = friends.map((f) => f.friend?.id).filter(Boolean);
-      
+
       if (friendIds.length > 0) {
         const { data: friendRegistrations } = await supabase
           .from("registrations")
-          .select(`
+          .select(
+            `
             *,
             user:users!registrations_user_id_fkey(*),
             event:events!registrations_event_id_fkey(*)
-          `)
+          `,
+          )
           .in("user_id", friendIds)
-          .gte("registered_at", new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString());
+          .gte(
+            "registered_at",
+            new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+          );
 
         friendRegistrations?.forEach((reg: any) => {
           if (reg.user && reg.event) {
@@ -142,22 +146,25 @@ export const NotificationsScreen: React.FC = () => {
     // 3. Nearby/Upcoming events notifications
     const upcomingEvents = events.filter((event) => {
       const eventDate = new Date(event.start_date);
-      const daysUntil = (eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+      const daysUntil =
+        (eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
       return daysUntil > 0 && daysUntil <= 30;
     });
 
     upcomingEvents.slice(0, 3).forEach((event) => {
       const eventDate = new Date(event.start_date);
       const daysUntil = Math.ceil(
-        (eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+        (eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
       );
-      
+
       notifs.push({
         id: `nearby-event-${event.id}`,
         type: "nearby_event",
         title: "Upcoming Event Near You",
         message: `${event.title} starts in ${daysUntil} day${daysUntil !== 1 ? "s" : ""}`,
-        timestamp: new Date(now.getTime() - Math.random() * 24 * 60 * 60 * 1000).toISOString(),
+        timestamp: new Date(
+          now.getTime() - Math.random() * 24 * 60 * 60 * 1000,
+        ).toISOString(),
         read: true,
         data: {
           eventId: event.id,
@@ -171,24 +178,29 @@ export const NotificationsScreen: React.FC = () => {
     try {
       const { data: userRegistrations } = await supabase
         .from("registrations")
-        .select(`
+        .select(
+          `
           *,
           event:events!registrations_event_id_fkey(*)
-        `)
+        `,
+        )
         .eq("user_id", user.id);
 
       userRegistrations?.forEach((reg: any) => {
         if (reg.event) {
           const eventDate = new Date(reg.event.start_date);
-          const daysUntil = (eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-          
+          const daysUntil =
+            (eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+
           if (daysUntil > 0 && daysUntil <= 7) {
             notifs.push({
               id: `reminder-${reg.id}`,
               type: "event_reminder",
               title: "Event Reminder",
               message: `${reg.event.title} is coming up in ${Math.ceil(daysUntil)} day${Math.ceil(daysUntil) !== 1 ? "s" : ""}!`,
-              timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
+              timestamp: new Date(
+                now.getTime() - 2 * 60 * 60 * 1000,
+              ).toISOString(),
               read: false,
               data: {
                 eventId: reg.event.id,
@@ -205,7 +217,8 @@ export const NotificationsScreen: React.FC = () => {
 
     // Sort by timestamp (newest first)
     notifs.sort(
-      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
     );
 
     setNotifications(notifs);
@@ -215,12 +228,9 @@ export const NotificationsScreen: React.FC = () => {
     const loadData = async () => {
       if (!user) return;
       setLoading(true);
-      
-      await Promise.all([
-        fetchFriends(user.id),
-        fetchEvents(),
-      ]);
-      
+
+      await Promise.all([fetchFriends(user.id), fetchEvents()]);
+
       setLoading(false);
     };
 
@@ -236,10 +246,7 @@ export const NotificationsScreen: React.FC = () => {
   const handleRefresh = useCallback(async () => {
     if (!user) return;
     setRefreshing(true);
-    await Promise.all([
-      fetchFriends(user.id),
-      fetchEvents(),
-    ]);
+    await Promise.all([fetchFriends(user.id), fetchEvents()]);
     await generateNotifications();
     setRefreshing(false);
   }, [user, generateNotifications]);
@@ -333,10 +340,7 @@ export const NotificationsScreen: React.FC = () => {
       >
         <Card
           variant="default"
-          style={[
-            styles.notificationCard,
-            !item.read && styles.unreadCard,
-          ]}
+          style={[styles.notificationCard, !item.read && styles.unreadCard]}
         >
           <View style={styles.notificationContent}>
             {/* Icon or Avatar */}
@@ -348,12 +352,9 @@ export const NotificationsScreen: React.FC = () => {
                   size="medium"
                 />
                 <View
-                  style={[
-                    styles.iconBadge,
-                    { backgroundColor: iconColor },
-                  ]}
+                  style={[styles.iconBadge, { backgroundColor: iconColor }]}
                 >
-                  <Ionicons
+                  <Icon
                     name={iconName as any}
                     size={10}
                     color={Colors.text.inverse}
@@ -367,7 +368,7 @@ export const NotificationsScreen: React.FC = () => {
                   { backgroundColor: `${iconColor}20` },
                 ]}
               >
-                <Ionicons name={iconName as any} size={24} color={iconColor} />
+                <Icon name={iconName as any} size={24} color={iconColor} />
               </View>
             )}
 

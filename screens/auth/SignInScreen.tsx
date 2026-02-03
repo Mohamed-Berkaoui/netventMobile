@@ -3,7 +3,7 @@
  * Login with email/password and social auth options
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -163,11 +163,7 @@ export const SignInScreen: React.FC = () => {
           {/* Error Banner */}
           {error && (
             <View style={styles.errorBanner}>
-              <Ionicons
-                name="alert-circle"
-                size={20}
-                color={Colors.status.error}
-              />
+              <Icon name="close-circle" size={20} color={Colors.status.error} />
               <Text style={styles.errorText}>
                 {error === "Invalid API key"
                   ? "Unable to connect to server. Please check your internet connection."
@@ -234,11 +230,7 @@ export const SignInScreen: React.FC = () => {
               style={styles.socialButton}
               onPress={() => handleSocialAuth("google")}
             >
-              <Ionicons
-                name="logo-google"
-                size={20}
-                color={Colors.text.primary}
-              />
+              <Icon name="search" size={20} color={Colors.text.primary} />
               <Text style={styles.socialButtonText}>Sign in</Text>
             </TouchableOpacity>
 
@@ -246,11 +238,7 @@ export const SignInScreen: React.FC = () => {
               style={styles.socialButton}
               onPress={() => handleSocialAuth("apple")}
             >
-              <Ionicons
-                name="logo-apple"
-                size={20}
-                color={Colors.text.primary}
-              />
+              <Icon name="person" size={20} color={Colors.text.primary} />
               <Text style={styles.socialButtonText}>Sign in</Text>
             </TouchableOpacity>
 
@@ -258,11 +246,7 @@ export const SignInScreen: React.FC = () => {
               style={styles.socialButton}
               onPress={() => handleSocialAuth("linkedin")}
             >
-              <Ionicons
-                name="logo-linkedin"
-                size={20}
-                color={Colors.text.primary}
-              />
+              <Icon name="people" size={20} color={Colors.text.primary} />
               <Text style={styles.socialButtonText}>Sign in</Text>
             </TouchableOpacity>
 
@@ -270,11 +254,7 @@ export const SignInScreen: React.FC = () => {
               style={styles.socialButton}
               onPress={() => handleSocialAuth("phone")}
             >
-              <Ionicons
-                name="call-outline"
-                size={20}
-                color={Colors.text.primary}
-              />
+              <Icon name="chatbubble" size={20} color={Colors.text.primary} />
               <Text style={styles.socialButtonText}>Phone</Text>
             </TouchableOpacity>
           </View>

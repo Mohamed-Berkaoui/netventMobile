@@ -11,7 +11,6 @@
  * that are not yet implemented. Shows empty states/coming soon.
  */
 
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -25,6 +24,7 @@ import {
     View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "../../components/TabIcon";
 import { Card, EmptyState, LoadingSpinner } from "../../components/ui";
 import {
     BorderRadius,
@@ -194,7 +194,7 @@ export const EngagementScreen: React.FC = () => {
         style={[styles.tab, activeTab === "polls" && styles.tabActive]}
         onPress={() => setActiveTab("polls")}
       >
-        <Ionicons
+        <Icon
           name="bar-chart"
           size={20}
           color={
@@ -215,7 +215,7 @@ export const EngagementScreen: React.FC = () => {
         style={[styles.tab, activeTab === "qa" && styles.tabActive]}
         onPress={() => setActiveTab("qa")}
       >
-        <Ionicons
+        <Icon
           name="chatbubbles"
           size={20}
           color={
@@ -233,7 +233,7 @@ export const EngagementScreen: React.FC = () => {
         style={[styles.tab, activeTab === "surveys" && styles.tabActive]}
         onPress={() => setActiveTab("surveys")}
       >
-        <Ionicons
+        <Icon
           name="clipboard"
           size={20}
           color={
@@ -264,11 +264,7 @@ export const EngagementScreen: React.FC = () => {
             description="Live polls from speakers will appear here during sessions. Stay tuned!"
           />
           <View style={styles.comingSoonBadge}>
-            <Ionicons
-              name="time-outline"
-              size={16}
-              color={Colors.primary.accent}
-            />
+            <Icon name="time-outline" size={16} color={Colors.primary.accent} />
             <Text style={styles.comingSoonText}>Coming Soon</Text>
           </View>
         </View>
@@ -342,7 +338,7 @@ export const EngagementScreen: React.FC = () => {
             onPress={handleSubmitQuestion}
             disabled={!newQuestion.trim()}
           >
-            <Ionicons
+            <Icon
               name="send"
               size={20}
               color={
@@ -360,7 +356,7 @@ export const EngagementScreen: React.FC = () => {
               description="Be the first to ask a question! Questions from attendees will be displayed here."
             />
             <View style={styles.comingSoonBadge}>
-              <Ionicons
+              <Icon
                 name="time-outline"
                 size={16}
                 color={Colors.primary.accent}
@@ -403,7 +399,7 @@ export const EngagementScreen: React.FC = () => {
                   ]}
                   onPress={() => handleLikeQuestion(question.id)}
                 >
-                  <Ionicons
+                  <Icon
                     name={question.is_liked ? "heart" : "heart-outline"}
                     size={18}
                     color={
@@ -423,7 +419,7 @@ export const EngagementScreen: React.FC = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.questionAction}>
-                  <Ionicons
+                  <Icon
                     name="chatbubble-outline"
                     size={18}
                     color={Colors.text.tertiary}
@@ -450,11 +446,7 @@ export const EngagementScreen: React.FC = () => {
             description="Event feedback surveys will appear here. Help organizers improve future events!"
           />
           <View style={styles.comingSoonBadge}>
-            <Ionicons
-              name="time-outline"
-              size={16}
-              color={Colors.primary.accent}
-            />
+            <Icon name="time-outline" size={16} color={Colors.primary.accent} />
             <Text style={styles.comingSoonText}>Coming Soon</Text>
           </View>
         </View>
@@ -465,11 +457,7 @@ export const EngagementScreen: React.FC = () => {
       <Card key={survey.id} variant="default" style={styles.surveyCard}>
         <View style={styles.surveyHeader}>
           <View style={styles.surveyIcon}>
-            <Ionicons
-              name="clipboard"
-              size={24}
-              color={Colors.primary.accent}
-            />
+            <Icon name="clipboard" size={24} color={Colors.primary.accent} />
           </View>
           <View style={styles.surveyInfo}>
             <Text style={styles.surveyTitle}>{survey.title}</Text>
@@ -498,11 +486,7 @@ export const EngagementScreen: React.FC = () => {
           <Text style={styles.surveyButtonText}>
             {survey.progress > 0 ? "Continue Survey" : "Start Survey"}
           </Text>
-          <Ionicons
-            name="chevron-forward"
-            size={20}
-            color={Colors.text.inverse}
-          />
+          <Icon name="chevron-forward" size={20} color={Colors.text.inverse} />
         </TouchableOpacity>
       </Card>
     ));
@@ -529,7 +513,7 @@ export const EngagementScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Engage</Text>
         <TouchableOpacity style={styles.helpButton}>
-          <Ionicons
+          <Icon
             name="help-circle-outline"
             size={24}
             color={Colors.text.primary}

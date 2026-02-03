@@ -4,7 +4,7 @@
  * Fetches real agenda data from Supabase
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import * as Haptics from "expo-haptics";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
@@ -53,7 +53,7 @@ interface AgendaDisplayItem {
   title: string;
   duration: string;
   location: string;
-  type: 'keynote' | 'workshop' | 'panel' | 'break' | 'session';
+  type: "keynote" | "workshop" | "panel" | "break" | "session";
   speaker?: string;
 }
 
@@ -62,9 +62,9 @@ interface AgendaDisplayItem {
  */
 const formatTime = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
     hour12: true,
   });
 };
@@ -81,7 +81,9 @@ const getDuration = (startTime: string, endTime: string): string => {
   if (diffMins >= 60) {
     const hours = Math.floor(diffMins / 60);
     const mins = diffMins % 60;
-    return mins > 0 ? `${hours}h ${mins}m` : `${hours} hour${hours > 1 ? 's' : ''}`;
+    return mins > 0
+      ? `${hours}h ${mins}m`
+      : `${hours} hour${hours > 1 ? "s" : ""}`;
   }
   return `${diffMins} min`;
 };
@@ -89,13 +91,27 @@ const getDuration = (startTime: string, endTime: string): string => {
 /**
  * Determine session type from title
  */
-const getSessionType = (title: string): AgendaDisplayItem['type'] => {
+const getSessionType = (title: string): AgendaDisplayItem["type"] => {
   const lowerTitle = title.toLowerCase();
-  if (lowerTitle.includes('keynote') || lowerTitle.includes('opening') || lowerTitle.includes('closing')) return 'keynote';
-  if (lowerTitle.includes('workshop') || lowerTitle.includes('hands-on')) return 'workshop';
-  if (lowerTitle.includes('panel') || lowerTitle.includes('discussion')) return 'panel';
-  if (lowerTitle.includes('break') || lowerTitle.includes('lunch') || lowerTitle.includes('networking') || lowerTitle.includes('coffee') || lowerTitle.includes('registration')) return 'break';
-  return 'session';
+  if (
+    lowerTitle.includes("keynote") ||
+    lowerTitle.includes("opening") ||
+    lowerTitle.includes("closing")
+  )
+    return "keynote";
+  if (lowerTitle.includes("workshop") || lowerTitle.includes("hands-on"))
+    return "workshop";
+  if (lowerTitle.includes("panel") || lowerTitle.includes("discussion"))
+    return "panel";
+  if (
+    lowerTitle.includes("break") ||
+    lowerTitle.includes("lunch") ||
+    lowerTitle.includes("networking") ||
+    lowerTitle.includes("coffee") ||
+    lowerTitle.includes("registration")
+  )
+    return "break";
+  return "session";
 };
 
 // Venue map areas (can be fetched from database later)
@@ -132,25 +148,27 @@ export const EventDetailsScreen: React.FC = () => {
     try {
       setLoadingAgenda(true);
       const { data, error } = await supabase
-        .from('agenda_items')
-        .select('*')
-        .eq('event_id', eventId)
-        .order('start_time', { ascending: true });
+        .from("agenda_items")
+        .select("*")
+        .eq("event_id", eventId)
+        .order("start_time", { ascending: true });
 
       if (error) throw error;
 
-      const displayItems: AgendaDisplayItem[] = (data || []).map((item: AgendaItem) => ({
-        id: item.id,
-        time: formatTime(item.start_time),
-        title: item.title,
-        duration: getDuration(item.start_time, item.end_time),
-        location: `${item.location_name} • Floor ${item.floor}`,
-        type: getSessionType(item.title),
-      }));
+      const displayItems: AgendaDisplayItem[] = (data || []).map(
+        (item: AgendaItem) => ({
+          id: item.id,
+          time: formatTime(item.start_time),
+          title: item.title,
+          duration: getDuration(item.start_time, item.end_time),
+          location: `${item.location_name} • Floor ${item.floor}`,
+          type: getSessionType(item.title),
+        }),
+      );
 
       setAgendaItems(displayItems);
     } catch (error) {
-      console.error('Error fetching agenda items:', error);
+      console.error("Error fetching agenda items:", error);
     } finally {
       setLoadingAgenda(false);
     }
@@ -255,13 +273,17 @@ export const EventDetailsScreen: React.FC = () => {
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{currentEvent.interests?.length || 0}</Text>
+          <Text style={styles.statNumber}>
+            {currentEvent.interests?.length || 0}
+          </Text>
           <Text style={styles.statLabel}>Topics</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <Text style={styles.statNumber}>
-            {new Date(currentEvent.end_date).getDate() - new Date(currentEvent.start_date).getDate() + 1}
+            {new Date(currentEvent.end_date).getDate() -
+              new Date(currentEvent.start_date).getDate() +
+              1}
           </Text>
           <Text style={styles.statLabel}>Days</Text>
         </View>
@@ -288,7 +310,7 @@ export const EventDetailsScreen: React.FC = () => {
           ].map((item, index) => (
             <View key={index} style={styles.highlightItem}>
               <View style={styles.highlightIcon}>
-                <Ionicons
+                <Icon
                   name={item.icon as any}
                   size={20}
                   color={Colors.primary.accent}
@@ -305,7 +327,7 @@ export const EventDetailsScreen: React.FC = () => {
         <Text style={styles.sectionTitle}>Location</Text>
         <Card style={styles.locationCard}>
           <View style={styles.locationMap}>
-            <Ionicons name="map" size={48} color={Colors.text.tertiary} />
+            <Icon name="compass" size={48} color={Colors.text.tertiary} />
           </View>
           <View style={styles.locationInfo}>
             <Text style={styles.locationName}>
@@ -315,11 +337,7 @@ export const EventDetailsScreen: React.FC = () => {
               {currentEvent.venue_address || "123 Main Street, City"}
             </Text>
             <TouchableOpacity style={styles.directionsButton}>
-              <Ionicons
-                name="navigate"
-                size={16}
-                color={Colors.primary.accent}
-              />
+              <Icon name="compass" size={16} color={Colors.primary.accent} />
               <Text style={styles.directionsText}>Get Directions</Text>
             </TouchableOpacity>
           </View>
@@ -332,7 +350,7 @@ export const EventDetailsScreen: React.FC = () => {
     <View style={styles.tabContent}>
       {/* Note: Speakers data would come from a speakers table in production */}
       <Card variant="outlined" style={styles.emptyStateCard}>
-        <Ionicons name="people-outline" size={48} color={Colors.text.tertiary} />
+        <Icon name="people" size={48} color={Colors.text.tertiary} />
         <Text style={styles.emptyStateTitle}>Speakers Coming Soon</Text>
         <Text style={styles.emptyStateText}>
           Speaker information will be announced closer to the event date.
@@ -347,9 +365,15 @@ export const EventDetailsScreen: React.FC = () => {
         <LoadingSpinner message="Loading agenda..." />
       ) : agendaItems.length === 0 ? (
         <Card variant="outlined" style={styles.emptyStateCard}>
-          <Ionicons name="calendar-outline" size={48} color={Colors.text.tertiary} />
+          <Icon
+            name="calendar-outline"
+            size={48}
+            color={Colors.text.tertiary}
+          />
           <Text style={styles.emptyStateTitle}>No Agenda Available</Text>
-          <Text style={styles.emptyStateText}>The event organizer hasn't added any sessions yet.</Text>
+          <Text style={styles.emptyStateText}>
+            The event organizer hasn't added any sessions yet.
+          </Text>
         </Card>
       ) : (
         <View style={styles.agendaList}>
@@ -362,7 +386,9 @@ export const EventDetailsScreen: React.FC = () => {
                     { backgroundColor: getEventTypeColor(item.type) },
                   ]}
                 />
-                {index < agendaItems.length - 1 && <View style={styles.agendaLine} />}
+                {index < agendaItems.length - 1 && (
+                  <View style={styles.agendaLine} />
+                )}
               </View>
               <View style={styles.agendaContent}>
                 <View style={styles.agendaHeader}>
@@ -386,16 +412,16 @@ export const EventDetailsScreen: React.FC = () => {
                 <Text style={styles.agendaTitle}>{item.title}</Text>
                 <View style={styles.agendaDetails}>
                   <View style={styles.agendaDetail}>
-                    <Ionicons
-                      name="location-outline"
+                    <Icon
+                      name="compass-outline"
                       size={14}
                       color={Colors.text.secondary}
                     />
                     <Text style={styles.agendaDetailText}>{item.location}</Text>
                   </View>
                   <View style={styles.agendaDetail}>
-                    <Ionicons
-                      name="time-outline"
+                    <Icon
+                      name="calendar-outline"
                       size={14}
                       color={Colors.text.secondary}
                     />
@@ -404,7 +430,7 @@ export const EventDetailsScreen: React.FC = () => {
                 </View>
                 {item.speaker && (
                   <View style={styles.agendaSpeaker}>
-                    <Ionicons
+                    <Icon
                       name="person-outline"
                       size={14}
                       color={Colors.primary.accent}
@@ -425,7 +451,7 @@ export const EventDetailsScreen: React.FC = () => {
       {/* Venue Map Placeholder */}
       <Card style={styles.venueMapCard}>
         <View style={styles.venueMapPlaceholder}>
-          <Ionicons name="map" size={64} color={Colors.text.tertiary} />
+          <Icon name="compass" size={64} color={Colors.text.tertiary} />
           <Text style={styles.venueMapText}>Interactive Venue Map</Text>
           <Text style={styles.venueMapSubtext}>Tap to explore</Text>
         </View>
@@ -438,11 +464,7 @@ export const EventDetailsScreen: React.FC = () => {
           {VENUE_AREAS.map((area) => (
             <TouchableOpacity key={area.id} style={styles.venueAreaItem}>
               <View style={styles.venueAreaIcon}>
-                <Ionicons
-                  name="location"
-                  size={20}
-                  color={Colors.primary.accent}
-                />
+                <Icon name="compass" size={20} color={Colors.primary.accent} />
               </View>
               <View style={styles.venueAreaInfo}>
                 <Text style={styles.venueAreaName}>{area.name}</Text>
@@ -450,7 +472,7 @@ export const EventDetailsScreen: React.FC = () => {
                   {area.floor} Floor • Capacity: {area.capacity}
                 </Text>
               </View>
-              <Ionicons
+              <Icon
                 name="chevron-forward"
                 size={20}
                 color={Colors.text.tertiary}
@@ -470,7 +492,7 @@ export const EventDetailsScreen: React.FC = () => {
         ].map((link, index) => (
           <TouchableOpacity key={index} style={styles.venueQuickLink}>
             <View style={styles.venueQuickLinkIcon}>
-              <Ionicons
+              <Icon
                 name={link.icon as any}
                 size={24}
                 color={Colors.text.primary}
@@ -500,7 +522,7 @@ export const EventDetailsScreen: React.FC = () => {
             />
           ) : (
             <View style={styles.bannerPlaceholder}>
-              <Ionicons name="image" size={64} color={Colors.text.tertiary} />
+              <Icon name="image" size={64} color={Colors.text.tertiary} />
             </View>
           )}
 
@@ -510,25 +532,21 @@ export const EventDetailsScreen: React.FC = () => {
               style={styles.backButton}
               onPress={() => router.back()}
             >
-              <Ionicons
-                name="arrow-back"
-                size={24}
-                color={Colors.text.inverse}
-              />
+              <Icon name="arrow-back" size={24} color={Colors.text.inverse} />
             </TouchableOpacity>
             <View style={styles.bannerActions}>
               <TouchableOpacity
                 style={styles.actionButton}
                 onPress={handleShare}
               >
-                <Ionicons
+                <Icon
                   name="share-outline"
                   size={24}
                   color={Colors.text.inverse}
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionButton}>
-                <Ionicons
+                <Icon
                   name="bookmark-outline"
                   size={24}
                   color={Colors.text.inverse}
@@ -540,11 +558,7 @@ export const EventDetailsScreen: React.FC = () => {
           {/* Event Badge */}
           {registered && (
             <View style={styles.registeredBadge}>
-              <Ionicons
-                name="checkmark-circle"
-                size={16}
-                color={Colors.text.inverse}
-              />
+              <Icon name="checkmark" size={16} color={Colors.text.inverse} />
               <Text style={styles.registeredText}>Registered</Text>
             </View>
           )}
@@ -555,7 +569,7 @@ export const EventDetailsScreen: React.FC = () => {
           <Text style={styles.eventTitle}>{currentEvent.title}</Text>
           <View style={styles.eventMeta}>
             <View style={styles.metaItem}>
-              <Ionicons
+              <Icon
                 name="calendar-outline"
                 size={16}
                 color={Colors.primary.accent}
@@ -565,8 +579,8 @@ export const EventDetailsScreen: React.FC = () => {
               </Text>
             </View>
             <View style={styles.metaItem}>
-              <Ionicons
-                name="location-outline"
+              <Icon
+                name="compass-outline"
                 size={16}
                 color={Colors.primary.accent}
               />
@@ -1093,21 +1107,21 @@ const styles = StyleSheet.create({
   },
   emptyStateCard: {
     padding: Spacing.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   emptyStateTitle: {
     fontSize: FontSizes.lg,
     fontWeight: FontWeights.semibold,
     color: Colors.text.secondary,
     marginTop: Spacing.md,
-    textAlign: 'center',
+    textAlign: "center",
   },
   emptyStateText: {
     fontSize: FontSizes.sm,
     color: Colors.text.tertiary,
     marginTop: Spacing.xs,
-    textAlign: 'center',
+    textAlign: "center",
     maxWidth: 250,
   },
 });

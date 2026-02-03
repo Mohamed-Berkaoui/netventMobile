@@ -13,7 +13,7 @@
  * - AI Match scores
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -41,7 +41,13 @@ import { supabase } from "../../services/supabase";
 import { useAIMatchStore } from "../../stores/aiMatchStore";
 import { useAuthStore } from "../../stores/authStore";
 import { useSocialStore } from "../../stores/socialStore";
-import { AIMatch, ChatConversation, FriendWithProfile, Post, User } from "../../types";
+import {
+    AIMatch,
+    ChatConversation,
+    FriendWithProfile,
+    Post,
+    User,
+} from "../../types";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const SUGGESTION_CARD_WIDTH = SCREEN_WIDTH * 0.7;
@@ -65,7 +71,7 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({
   return (
     <Card variant="elevated" style={styles.suggestionCard}>
       <View style={styles.matchBadge}>
-        <Ionicons name="flash" size={12} color={Colors.status.warning} />
+        <Icon name="flash" size={12} color={Colors.status.warning} />
         <Text style={styles.matchScore}>{match.score}% Match</Text>
       </View>
 
@@ -95,7 +101,7 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({
 
       {match.common_interests && match.common_interests.length > 0 && (
         <View style={styles.mutualRow}>
-          <Ionicons name="sparkles" size={14} color={Colors.text.tertiary} />
+          <Icon name="sparkles" size={14} color={Colors.text.tertiary} />
           <Text style={styles.mutualText}>
             {match.common_interests.length} common interest
             {match.common_interests.length !== 1 ? "s" : ""}
@@ -105,12 +111,12 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({
 
       <View style={styles.suggestionActions}>
         <TouchableOpacity style={styles.connectButton} onPress={onConnect}>
-          <Ionicons name="person-add" size={16} color={Colors.text.inverse} />
+          <Icon name="person-add" size={16} color={Colors.text.inverse} />
           <Text style={styles.connectButtonText}>Connect</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.scheduleButton} onPress={onSchedule}>
-          <Ionicons name="calendar" size={16} color={Colors.primary.accent} />
+          <Icon name="calendar" size={16} color={Colors.primary.accent} />
         </TouchableOpacity>
       </View>
     </Card>
@@ -139,7 +145,11 @@ interface FriendCardProps {
   onProfile: () => void;
 }
 
-const FriendCard: React.FC<FriendCardProps> = ({ friend, onChat, onProfile }) => {
+const FriendCard: React.FC<FriendCardProps> = ({
+  friend,
+  onChat,
+  onProfile,
+}) => {
   const friendUser = friend.friend;
   if (!friendUser) return null;
 
@@ -155,7 +165,8 @@ const FriendCard: React.FC<FriendCardProps> = ({ friend, onChat, onProfile }) =>
           <Text style={styles.friendName}>{friendUser.name}</Text>
           {friendUser.title && (
             <Text style={styles.friendTitle}>
-              {friendUser.title}{friendUser.company ? ` at ${friendUser.company}` : ""}
+              {friendUser.title}
+              {friendUser.company ? ` at ${friendUser.company}` : ""}
             </Text>
           )}
           {friendUser.interests && friendUser.interests.length > 0 && (
@@ -175,7 +186,7 @@ const FriendCard: React.FC<FriendCardProps> = ({ friend, onChat, onProfile }) =>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.chatIconButton} onPress={onChat}>
-        <Ionicons name="chatbubble" size={22} color={Colors.primary.accent} />
+        <Icon name="chatbubble" size={22} color={Colors.primary.accent} />
       </TouchableOpacity>
     </Card>
   );
@@ -189,7 +200,10 @@ interface ConversationCardProps {
   onPress: () => void;
 }
 
-const ConversationCard: React.FC<ConversationCardProps> = ({ conversation, onPress }) => {
+const ConversationCard: React.FC<ConversationCardProps> = ({
+  conversation,
+  onPress,
+}) => {
   const otherUser = conversation.user;
   if (!otherUser) return null;
 
@@ -219,7 +233,9 @@ const ConversationCard: React.FC<ConversationCardProps> = ({ conversation, onPre
             {conversation.unread_count > 0 && (
               <View style={styles.unreadBadge}>
                 <Text style={styles.unreadCount}>
-                  {conversation.unread_count > 9 ? "9+" : conversation.unread_count}
+                  {conversation.unread_count > 9
+                    ? "9+"
+                    : conversation.unread_count}
                 </Text>
               </View>
             )}
@@ -234,11 +250,11 @@ const ConversationCard: React.FC<ConversationCardProps> = ({ conversation, onPre
               )}
             </View>
             {conversation.last_message ? (
-              <Text 
+              <Text
                 style={[
                   styles.lastMessage,
-                  conversation.unread_count > 0 && styles.unreadMessage
-                ]} 
+                  conversation.unread_count > 0 && styles.unreadMessage,
+                ]}
                 numberOfLines={1}
               >
                 {conversation.last_message.content}
@@ -262,7 +278,11 @@ interface RequestCardProps {
   onReject: () => void;
 }
 
-const RequestCard: React.FC<RequestCardProps> = ({ request, onAccept, onReject }) => {
+const RequestCard: React.FC<RequestCardProps> = ({
+  request,
+  onAccept,
+  onReject,
+}) => {
   const requester = request.friend;
   if (!requester) return null;
 
@@ -283,13 +303,13 @@ const RequestCard: React.FC<RequestCardProps> = ({ request, onAccept, onReject }
             style={[styles.requestButton, styles.acceptButton]}
             onPress={onAccept}
           >
-            <Ionicons name="checkmark" size={18} color={Colors.text.inverse} />
+            <Icon name="checkmark" size={18} color={Colors.text.inverse} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.requestButton, styles.rejectButton]}
             onPress={onReject}
           >
-            <Ionicons name="close" size={18} color={Colors.text.primary} />
+            <Icon name="close" size={18} color={Colors.text.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -357,11 +377,7 @@ const PostCard: React.FC<PostCardProps> = ({
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.postMoreButton}>
-          <Ionicons
-            name="ellipsis-horizontal"
-            size={20}
-            color={Colors.text.tertiary}
-          />
+          <Icon name="close" size={20} color={Colors.text.tertiary} />
         </TouchableOpacity>
       </View>
 
@@ -403,7 +419,7 @@ const PostCard: React.FC<PostCardProps> = ({
           style={[styles.actionButton, isLiked && styles.actionButtonActive]}
           onPress={onLike}
         >
-          <Ionicons
+          <Icon
             name={isLiked ? "heart" : "heart-outline"}
             size={20}
             color={isLiked ? Colors.social.like : Colors.text.tertiary}
@@ -414,20 +430,12 @@ const PostCard: React.FC<PostCardProps> = ({
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.actionButton} onPress={onComment}>
-          <Ionicons
-            name="chatbubble-outline"
-            size={20}
-            color={Colors.text.tertiary}
-          />
+          <Icon name="chatbubble" size={20} color={Colors.text.tertiary} />
           <Text style={styles.actionText}>Comment</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.actionButton} onPress={onShare}>
-          <Ionicons
-            name="share-outline"
-            size={20}
-            color={Colors.text.tertiary}
-          />
+          <Icon name="share-outline" size={20} color={Colors.text.tertiary} />
           <Text style={styles.actionText}>Share</Text>
         </TouchableOpacity>
       </View>
@@ -438,7 +446,7 @@ const PostCard: React.FC<PostCardProps> = ({
           style={styles.scheduleMeetingCTA}
           onPress={onScheduleMeeting}
         >
-          <Ionicons
+          <Icon
             name="calendar-outline"
             size={16}
             color={Colors.primary.accent}
@@ -456,7 +464,7 @@ export const ConnectionsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ConnectionsTab>("feed");
   const [refreshing, setRefreshing] = useState(false);
   const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
-  
+
   // Search state
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -556,7 +564,7 @@ export const ConnectionsScreen: React.FC = () => {
   // Search for users
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
-    
+
     if (query.trim().length < 2) {
       setSearchResults([]);
       return;
@@ -568,15 +576,17 @@ export const ConnectionsScreen: React.FC = () => {
         .from("users")
         .select("*")
         .neq("id", user?.id || "") // Exclude current user
-        .or(`name.ilike.%${query}%,email.ilike.%${query}%,company.ilike.%${query}%`)
+        .or(
+          `name.ilike.%${query}%,email.ilike.%${query}%,company.ilike.%${query}%`,
+        )
         .limit(20);
 
       if (error) throw error;
-      
+
       // Filter out users who are already friends
-      const friendIds = new Set(friends.map(f => f.friend?.id));
-      const filteredResults = (data || []).filter(u => !friendIds.has(u.id));
-      
+      const friendIds = new Set(friends.map((f) => f.friend?.id));
+      const filteredResults = (data || []).filter((u) => !friendIds.has(u.id));
+
       setSearchResults(filteredResults);
     } catch (error) {
       console.error("Search error:", error);
@@ -588,10 +598,10 @@ export const ConnectionsScreen: React.FC = () => {
 
   const handleSendRequest = async (targetUserId: string) => {
     if (!user) return;
-    
+
     const { error } = await sendFriendRequest(user.id, targetUserId);
     if (!error) {
-      setSentRequests(prev => new Set(prev).add(targetUserId));
+      setSentRequests((prev) => new Set(prev).add(targetUserId));
     }
   };
 
@@ -602,7 +612,10 @@ export const ConnectionsScreen: React.FC = () => {
   };
 
   // Calculate total unread messages for tab badge
-  const totalUnread = conversations.reduce((sum, c) => sum + (c.unread_count || 0), 0);
+  const totalUnread = conversations.reduce(
+    (sum, c) => sum + (c.unread_count || 0),
+    0,
+  );
 
   const renderSuggestion = ({ item }: { item: AIMatch }) => (
     <SuggestionCard
@@ -648,19 +661,15 @@ export const ConnectionsScreen: React.FC = () => {
         </View>
         <View style={styles.createPostActions}>
           <TouchableOpacity style={styles.createPostAction}>
-            <Ionicons name="image" size={20} color={Colors.status.success} />
+            <Icon name="image" size={20} color={Colors.status.success} />
             <Text style={styles.createPostActionText}>Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.createPostAction}>
-            <Ionicons name="videocam" size={20} color={Colors.status.error} />
+            <Icon name="videocam" size={20} color={Colors.status.error} />
             <Text style={styles.createPostActionText}>Video</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.createPostAction}>
-            <Ionicons
-              name="document-text"
-              size={20}
-              color={Colors.primary.accent}
-            />
+            <Icon name="bookmark" size={20} color={Colors.primary.accent} />
             <Text style={styles.createPostActionText}>Article</Text>
           </TouchableOpacity>
         </View>
@@ -704,11 +713,7 @@ export const ConnectionsScreen: React.FC = () => {
       <View style={styles.feedHeader}>
         <Text style={styles.sectionTitle}>Networking Feed</Text>
         <TouchableOpacity style={styles.filterButton}>
-          <Ionicons
-            name="options-outline"
-            size={20}
-            color={Colors.text.secondary}
-          />
+          <Icon name="settings" size={20} color={Colors.text.secondary} />
         </TouchableOpacity>
       </View>
     </>
@@ -776,12 +781,16 @@ export const ConnectionsScreen: React.FC = () => {
         style={[styles.tab, activeTab === "feed" && styles.activeTab]}
         onPress={() => setActiveTab("feed")}
       >
-        <Ionicons
-          name={activeTab === "feed" ? "newspaper" : "newspaper-outline"}
+        <Icon
+          name={activeTab === "feed" ? "bookmark" : "bookmark-outline"}
           size={20}
-          color={activeTab === "feed" ? Colors.primary.accent : Colors.text.tertiary}
+          color={
+            activeTab === "feed" ? Colors.primary.accent : Colors.text.tertiary
+          }
         />
-        <Text style={[styles.tabText, activeTab === "feed" && styles.activeTabText]}>
+        <Text
+          style={[styles.tabText, activeTab === "feed" && styles.activeTabText]}
+        >
           Feed
         </Text>
       </TouchableOpacity>
@@ -791,10 +800,14 @@ export const ConnectionsScreen: React.FC = () => {
         onPress={() => setActiveTab("friends")}
       >
         <View style={styles.tabIconContainer}>
-          <Ionicons
-            name={activeTab === "friends" ? "people" : "people-outline"}
+          <Icon
+            name={activeTab === "friends" ? "people" : "person-outline"}
             size={20}
-            color={activeTab === "friends" ? Colors.primary.accent : Colors.text.tertiary}
+            color={
+              activeTab === "friends"
+                ? Colors.primary.accent
+                : Colors.text.tertiary
+            }
           />
           {pendingRequests.length > 0 && (
             <View style={styles.tabBadge}>
@@ -804,7 +817,12 @@ export const ConnectionsScreen: React.FC = () => {
             </View>
           )}
         </View>
-        <Text style={[styles.tabText, activeTab === "friends" && styles.activeTabText]}>
+        <Text
+          style={[
+            styles.tabText,
+            activeTab === "friends" && styles.activeTabText,
+          ]}
+        >
           Friends ({friends.length})
         </Text>
       </TouchableOpacity>
@@ -814,10 +832,14 @@ export const ConnectionsScreen: React.FC = () => {
         onPress={() => setActiveTab("messages")}
       >
         <View style={styles.tabIconContainer}>
-          <Ionicons
-            name={activeTab === "messages" ? "chatbubbles" : "chatbubbles-outline"}
+          <Icon
+            name="chatbubble"
             size={20}
-            color={activeTab === "messages" ? Colors.primary.accent : Colors.text.tertiary}
+            color={
+              activeTab === "messages"
+                ? Colors.primary.accent
+                : Colors.text.tertiary
+            }
           />
           {totalUnread > 0 && (
             <View style={styles.tabBadge}>
@@ -827,7 +849,12 @@ export const ConnectionsScreen: React.FC = () => {
             </View>
           )}
         </View>
-        <Text style={[styles.tabText, activeTab === "messages" && styles.activeTabText]}>
+        <Text
+          style={[
+            styles.tabText,
+            activeTab === "messages" && styles.activeTabText,
+          ]}
+        >
           Messages
         </Text>
       </TouchableOpacity>
@@ -872,7 +899,9 @@ export const ConnectionsScreen: React.FC = () => {
             renderItem={renderFriend}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={FriendsHeader}
-            ListEmptyComponent={pendingRequests.length === 0 ? FriendsEmpty : null}
+            ListEmptyComponent={
+              pendingRequests.length === 0 ? FriendsEmpty : null
+            }
             contentContainerStyle={styles.friendsListContent}
             showsVerticalScrollIndicator={false}
             refreshControl={
@@ -891,7 +920,9 @@ export const ConnectionsScreen: React.FC = () => {
           <FlatList
             data={conversations}
             renderItem={renderConversation}
-            keyExtractor={(item) => item.user?.id || item.last_message?.id || Math.random().toString()}
+            keyExtractor={(item) =>
+              item.user?.id || item.last_message?.id || Math.random().toString()
+            }
             ListEmptyComponent={MessagesEmpty}
             contentContainerStyle={styles.messagesListContent}
             showsVerticalScrollIndicator={false}
@@ -937,13 +968,13 @@ export const ConnectionsScreen: React.FC = () => {
 
   // Search Result Card
   const renderSearchResult = ({ item }: { item: User }) => {
-    const isFriend = friends.some(f => f.friend?.id === item.id);
+    const isFriend = friends.some((f) => f.friend?.id === item.id);
     const requestSent = sentRequests.has(item.id);
-    const isPending = pendingRequests.some(r => r.friend?.id === item.id);
+    const isPending = pendingRequests.some((r) => r.friend?.id === item.id);
 
     return (
       <Card variant="default" style={styles.searchResultCard}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.searchResultContent}
           onPress={() => handleProfilePress(item.id)}
         >
@@ -956,7 +987,8 @@ export const ConnectionsScreen: React.FC = () => {
             <Text style={styles.searchResultName}>{item.name}</Text>
             {item.title && (
               <Text style={styles.searchResultTitle}>
-                {item.title}{item.company ? ` at ${item.company}` : ""}
+                {item.title}
+                {item.company ? ` at ${item.company}` : ""}
               </Text>
             )}
             {item.interests && item.interests.length > 0 && (
@@ -970,13 +1002,13 @@ export const ConnectionsScreen: React.FC = () => {
             )}
           </View>
         </TouchableOpacity>
-        
+
         {isFriend ? (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.messageButton}
             onPress={() => handleChatPress(item.id)}
           >
-            <Ionicons name="chatbubble" size={18} color={Colors.primary.accent} />
+            <Icon name="chatbubble" size={18} color={Colors.primary.accent} />
           </TouchableOpacity>
         ) : isPending ? (
           <View style={styles.pendingButton}>
@@ -984,15 +1016,15 @@ export const ConnectionsScreen: React.FC = () => {
           </View>
         ) : requestSent ? (
           <View style={styles.sentButton}>
-            <Ionicons name="checkmark" size={18} color={Colors.status.success} />
+            <Icon name="checkmark" size={18} color={Colors.status.success} />
             <Text style={styles.sentText}>Sent</Text>
           </View>
         ) : (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.addFriendButton}
             onPress={() => handleSendRequest(item.id)}
           >
-            <Ionicons name="person-add" size={18} color={Colors.text.inverse} />
+            <Icon name="person-add" size={18} color={Colors.text.inverse} />
           </TouchableOpacity>
         )}
       </Card>
@@ -1005,14 +1037,11 @@ export const ConnectionsScreen: React.FC = () => {
       <SafeAreaView style={styles.container} edges={["top"]}>
         {/* Search Header */}
         <View style={styles.searchHeader}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={closeSearch}
-          >
-            <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <TouchableOpacity style={styles.backButton} onPress={closeSearch}>
+            <Icon name="arrow-back" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
           <View style={styles.searchInputContainer}>
-            <Ionicons name="search" size={20} color={Colors.text.tertiary} />
+            <Icon name="search" size={20} color={Colors.text.tertiary} />
             <TextInput
               style={styles.searchInput}
               placeholder="Search by name, email, or company..."
@@ -1025,7 +1054,11 @@ export const ConnectionsScreen: React.FC = () => {
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => handleSearch("")}>
-                <Ionicons name="close-circle" size={20} color={Colors.text.tertiary} />
+                <Icon
+                  name="close-circle"
+                  size={20}
+                  color={Colors.text.tertiary}
+                />
               </TouchableOpacity>
             )}
           </View>
@@ -1039,15 +1072,16 @@ export const ConnectionsScreen: React.FC = () => {
           </View>
         ) : searchQuery.length < 2 ? (
           <View style={styles.searchPrompt}>
-            <Ionicons name="people" size={48} color={Colors.text.tertiary} />
+            <Icon name="people" size={48} color={Colors.text.tertiary} />
             <Text style={styles.searchPromptTitle}>Find People</Text>
             <Text style={styles.searchPromptText}>
-              Search for attendees by name, email, or company to connect with them
+              Search for attendees by name, email, or company to connect with
+              them
             </Text>
           </View>
         ) : searchResults.length === 0 ? (
           <View style={styles.searchEmpty}>
-            <Ionicons name="search" size={48} color={Colors.text.tertiary} />
+            <Icon name="search" size={48} color={Colors.text.tertiary} />
             <Text style={styles.searchEmptyTitle}>No Results</Text>
             <Text style={styles.searchEmptyText}>
               No users found matching "{searchQuery}"
@@ -1062,7 +1096,8 @@ export const ConnectionsScreen: React.FC = () => {
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={
               <Text style={styles.searchResultsCount}>
-                {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} found
+                {searchResults.length} result
+                {searchResults.length !== 1 ? "s" : ""} found
               </Text>
             }
           />
@@ -1081,13 +1116,13 @@ export const ConnectionsScreen: React.FC = () => {
             style={styles.headerButton}
             onPress={() => router.push("/ai-matches")}
           >
-            <Ionicons name="sparkles" size={24} color={Colors.primary.accent} />
+            <Icon name="sparkles" size={24} color={Colors.primary.accent} />
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.headerButton}
             onPress={() => setShowSearch(true)}
           >
-            <Ionicons name="search" size={24} color={Colors.text.primary} />
+            <Icon name="search" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
         </View>
       </View>

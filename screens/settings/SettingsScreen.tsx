@@ -10,7 +10,7 @@
  * - Text Size options
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -59,7 +59,7 @@ const SettingRow: React.FC<SettingRowProps> = ({
   const content = (
     <View style={styles.settingRow}>
       <View style={[styles.settingIcon, { backgroundColor: iconColor + "20" }]}>
-        <Ionicons name={icon as any} size={20} color={iconColor} />
+        <Icon name={icon as any} size={20} color={iconColor} />
       </View>
       <View style={styles.settingContent}>
         <Text style={styles.settingTitle}>{title}</Text>
@@ -67,11 +67,7 @@ const SettingRow: React.FC<SettingRowProps> = ({
       </View>
       {rightElement}
       {showChevron && !rightElement && (
-        <Ionicons
-          name="chevron-forward"
-          size={20}
-          color={Colors.text.tertiary}
-        />
+        <Icon name="chevron-forward" size={20} color={Colors.text.tertiary} />
       )}
     </View>
   );
@@ -126,7 +122,7 @@ export const SettingsScreen: React.FC = () => {
   const handleDeleteAccount = () => {
     if (Platform.OS === "web") {
       const confirmed = window.confirm(
-        "Delete Account?\n\nThis action cannot be undone. All your data will be permanently deleted."
+        "Delete Account?\n\nThis action cannot be undone. All your data will be permanently deleted.",
       );
       if (confirmed) {
         // Handle account deletion
@@ -157,7 +153,7 @@ export const SettingsScreen: React.FC = () => {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Icon name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Settings</Text>
         <View style={styles.headerRight} />
@@ -184,7 +180,7 @@ export const SettingsScreen: React.FC = () => {
               <Text style={styles.profileEmail}>{user?.email}</Text>
               <View style={styles.editProfileBadge}>
                 <Text style={styles.editProfileText}>Edit Profile</Text>
-                <Ionicons
+                <Icon
                   name="chevron-forward"
                   size={14}
                   color={Colors.primary.accent}
@@ -320,8 +316,8 @@ export const SettingsScreen: React.FC = () => {
                 ]}
                 onPress={() => setTheme("light")}
               >
-                <Ionicons
-                  name="sunny"
+                <Icon
+                  name="home"
                   size={20}
                   color={
                     theme === "light"
@@ -346,8 +342,8 @@ export const SettingsScreen: React.FC = () => {
                 ]}
                 onPress={() => setTheme("dark")}
               >
-                <Ionicons
-                  name="moon"
+                <Icon
+                  name="close-circle"
                   size={20}
                   color={
                     theme === "dark"
@@ -372,8 +368,8 @@ export const SettingsScreen: React.FC = () => {
                 ]}
                 onPress={() => setTheme("system")}
               >
-                <Ionicons
-                  name="phone-portrait"
+                <Icon
+                  name="settings"
                   size={20}
                   color={
                     theme === "system"
@@ -443,8 +439,8 @@ export const SettingsScreen: React.FC = () => {
                 ]}
                 onPress={() => setTextSize("system")}
               >
-                <Ionicons
-                  name="phone-portrait"
+                <Icon
+                  name="settings"
                   size={20}
                   color={
                     textSize === "system"
@@ -499,11 +495,7 @@ export const SettingsScreen: React.FC = () => {
               style={styles.signOutButton}
               onPress={handleSignOut}
             >
-              <Ionicons
-                name="log-out-outline"
-                size={20}
-                color={Colors.status.error}
-              />
+              <Icon name="arrow-back" size={20} color={Colors.status.error} />
               <Text style={styles.signOutText}>Sign Out</Text>
             </TouchableOpacity>
           </Card>

@@ -3,7 +3,7 @@
  * Reusable text input with validation support
  */
 
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/TabIcon";
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -22,12 +22,23 @@ import {
     Spacing,
 } from "../../constants/theme";
 
+type IconName =
+  | "mail"
+  | "mail-outline"
+  | "key"
+  | "key-outline"
+  | "lock-closed"
+  | "person"
+  | "person-outline"
+  | "search"
+  | "close-circle";
+
 interface InputProps extends TextInputProps {
   label?: string;
   error?: string;
   hint?: string;
-  leftIcon?: keyof typeof Ionicons.glyphMap;
-  rightIcon?: keyof typeof Ionicons.glyphMap;
+  leftIcon?: IconName;
+  rightIcon?: IconName;
   onRightIconPress?: () => void;
   containerStyle?: ViewStyle;
   required?: boolean;
@@ -69,11 +80,10 @@ export const Input: React.FC<InputProps> = ({
 
       <View style={inputContainerStyles}>
         {leftIcon && (
-          <Ionicons
+          <Icon
             name={leftIcon}
             size={20}
             color={isFocused ? Colors.primary.accent : Colors.text.tertiary}
-            style={styles.leftIcon}
           />
         )}
 
@@ -95,7 +105,7 @@ export const Input: React.FC<InputProps> = ({
             onPress={() => setShowPassword(!showPassword)}
             style={styles.rightIconButton}
           >
-            <Ionicons
+            <Icon
               name={showPassword ? "eye-off" : "eye"}
               size={20}
               color={Colors.text.tertiary}
@@ -109,7 +119,7 @@ export const Input: React.FC<InputProps> = ({
             style={styles.rightIconButton}
             disabled={!onRightIconPress}
           >
-            <Ionicons name={rightIcon} size={20} color={Colors.text.tertiary} />
+            <Icon name={rightIcon} size={20} color={Colors.text.tertiary} />
           </TouchableOpacity>
         )}
       </View>
